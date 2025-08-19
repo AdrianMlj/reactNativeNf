@@ -1,41 +1,34 @@
-# === CONFIGURATION ===
-$projectDir = "D:\AppNutrilfit\reactNativeNf"
-$scrcpyDir = "D:\AppNutrilfit\scrcpy-win64-v3.3.1\scrcpy-win64-v3.3.1"
+@echo off
+REM === Config ===
+set SCRCPY_DIR=D:\AppNutrilfit\scrcpy-win64-v3.3.1\scrcpy-win64-v3.3.1
 
-Write-Host "🔍 Détection du téléphone connecté en USB..."
-$deviceId = adb devices | Select-String "device$" | ForEach-Object { ($_ -split "`t")[0] }
+echo [1] Detection de l'appareil en USB...
+for /f "skip=1 tokens=1" %%i in ('adb devices') do (
+    if "%%i" NEQ "" (
+        set DEVICE_ID=%%i
+        goto found
+    )
+)
+echo Aucun appareil trouvé. Branchez-le en USB.
+pause
+exit /b
 
-if (-not $deviceId) {
-    Write-Host "❌ Aucun appareil détecté en USB. Branche ton téléphone pour la configuration initiale." -ForegroundColor Red
-    exit
-}
+:found
+echo Appareil détecté: %DEVICE_ID%
 
-Write-Host "✅ Téléphone détecté : $deviceId"
+echo [2] Activation du mode TCP/IP...
+adb -s %DEVICE_ID% tcpip 5555
 
-Write-Host "📡 Activation du mode TCP/IP sur le port 5555..."
-adb -s $deviceId tcpip 5555 | Out-Null
+echo [3] Récupération de l'adresse IP...
+for /f "tokens=1,2,3" %%a in ('adb -s %DEVICE_ID% shell ip route') do (
+    set PHONE_IP=%%3
+)
 
-Write-Host "🌐 Récupération de l'adresse IP..."
-$ipInfo = adb -s $deviceId shell ip route
-$phoneIP = ($ipInfo -split "src ")[1] -split " " | Select-Object -First 1
+echo IP détectée: %PHONE_IP%
 
-if (-not $phoneIP) {
-    Write-Host "❌ Impossible de récupérer l'adresse IP" -ForegroundColor Red
-    exit
-}
+echo [4] Connexion en Wi-Fi...
+adb connect %PHONE_IP%
 
-Write-Host "✅ Adresse IP trouvée : $phoneIP"
-
-Write-Host "🔌 Connexion au téléphone via Wi-Fi..."
-adb connect $phoneIP | Out-Null
-
-Write-Host "✅ Connecté au téléphone en Wi-Fi."
-
-Write-Host "📱 Lancement de scrcpy..."
-cd $scrcpyDir
-Start-Process scrcpy.exe
-
-Write-Host "🚀 Lancement du projet React Native..."
-cd $projectDir
-npx react-native run-android
-Write-Host "✅ Projet React Native lancé avec succès."
+echo [5] Lancement de scrcpy...
+"%SCRCPY_DIR%\scrcpy.exe" -s %PHONE_IP%
+pause
