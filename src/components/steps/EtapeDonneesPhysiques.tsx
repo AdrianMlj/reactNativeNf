@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { DonneesPhysiques, NiveauActivite, UserProfile } from '../../types/ProfilingTypes';
 import { LABELS, calculerIMC, determinerCategorieIMC } from '../../utils/ProfilingUtils';
+import { colors } from '../../utils/theme';
 
 interface EtapeDonneesPhysiquesProps {
   profile: Partial<UserProfile>;
@@ -289,7 +290,7 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   section: {
-    marginBottom: 25,
+    marginBottom: 20,
   },
   sectionTitle: {
     fontSize: 18,
@@ -316,7 +317,7 @@ const styles = StyleSheet.create({
     borderColor: '#e9ecef',
   },
   genderButtonSelected: {
-    borderColor: '#00b894',
+    borderColor: colors.brandLime,
     backgroundColor: '#f8fffd',
   },
   genderIcon: {
@@ -329,7 +330,7 @@ const styles = StyleSheet.create({
     color: '#636e72',
   },
   genderTextSelected: {
-    color: '#00b894',
+    color: colors.brandLime,
     fontWeight: '600',
   },
   numberInput: {
@@ -372,7 +373,7 @@ const styles = StyleSheet.create({
     borderColor: '#e9ecef',
   },
   activityCardSelected: {
-    borderColor: '#00b894',
+    borderColor: colors.brandLime,
     backgroundColor: '#f8fffd',
   },
   activityContent: {
@@ -394,7 +395,7 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   activityTitleSelected: {
-    color: '#00b894',
+    color: colors.brandLime,
     fontWeight: '600',
   },
   activityDescription: {
@@ -405,7 +406,7 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#00b894',
+    backgroundColor: colors.brandLime,
     justifyContent: 'center',
     alignItems: 'center',
   },

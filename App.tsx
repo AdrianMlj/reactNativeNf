@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 import ProfilingScreen from './src/components/ProfilingScreen';
 import { UserProfile } from './src/types/ProfilingTypes';
+import { colors } from './src/utils/theme';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -170,30 +171,24 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: colors.background,
   },
   header: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.brandBlack,
     paddingHorizontal: 20,
     paddingVertical: 20,
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e9ecef',
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    borderBottomWidth: 0,
   },
   appTitle: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#2d3436',
+    color: colors.brandLime,
     marginBottom: 5,
   },
   appSubtitle: {
     fontSize: 16,
-    color: '#636e72',
+    color: colors.textOnBlack,
   },
   content: {
     flex: 1,
@@ -204,27 +199,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  welcomeIcon: {
-    fontSize: 80,
-    marginBottom: 20,
-  },
   welcomeTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#2d3436',
+    color: colors.textOnBlack,
     textAlign: 'center',
     marginBottom: 15,
   },
   welcomeText: {
     fontSize: 16,
-    color: '#636e72',
+    color: colors.textOnBlack,
     textAlign: 'center',
     lineHeight: 24,
     marginBottom: 30,
     paddingHorizontal: 20,
   },
   startButton: {
-    backgroundColor: '#00b894',
+    backgroundColor: colors.brandLime,
     borderRadius: 12,
     paddingHorizontal: 30,
     paddingVertical: 15,
@@ -238,7 +229,7 @@ const styles = StyleSheet.create({
   startButtonText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#fff',
+    color: colors.textOnLime,
   },
   featuresSection: {
     width: '100%',
@@ -247,7 +238,7 @@ const styles = StyleSheet.create({
   featuresTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#2d3436',
+    color: colors.brandLime,
     marginBottom: 15,
     textAlign: 'center',
   },
@@ -257,13 +248,9 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     paddingHorizontal: 10,
   },
-  featureIcon: {
-    fontSize: 20,
-    marginRight: 12,
-  },
   featureText: {
     fontSize: 14,
-    color: '#636e72',
+    color: colors.textOnBlack,
     flex: 1,
     lineHeight: 18,
   },
@@ -272,38 +259,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 50,
   },
-  profileIcon: {
-    fontSize: 60,
-    marginBottom: 20,
-  },
   profileTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#2d3436',
+    color: colors.textOnBlack,
     textAlign: 'center',
     marginBottom: 30,
   },
   profileSummary: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.surface,
     borderRadius: 12,
     padding: 20,
     marginBottom: 30,
     width: '100%',
     elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
   },
   profileSummaryTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#00b894',
+    color: colors.textPrimary,
     marginBottom: 10,
   },
   profileSummaryText: {
     fontSize: 16,
-    color: '#636e72',
+    color: '#4A5160',
     marginBottom: 5,
   },
   actionsSection: {
@@ -311,58 +290,53 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   actionButton: {
-    backgroundColor: '#00b894',
+    backgroundColor: colors.brandLime,
     borderRadius: 12,
     padding: 15,
     alignItems: 'center',
     marginBottom: 12,
     elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
   },
   secondaryActionButton: {
     backgroundColor: 'transparent',
     borderWidth: 1,
-    borderColor: '#00b894',
+    borderColor: colors.brandLime,
   },
   actionButtonText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#fff',
+    color: colors.textOnLime,
   },
   secondaryActionButtonText: {
-    color: '#00b894',
+    color: colors.brandLime,
   },
   nextStepsSection: {
-    backgroundColor: '#e8f5e8',
+    backgroundColor: colors.surface,
     borderRadius: 12,
     padding: 20,
     width: '100%',
-    borderLeftWidth: 4,
-    borderLeftColor: '#27ae60',
+    borderLeftWidth: 0,
   },
   nextStepsTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#27ae60',
+    color: colors.textPrimary,
     marginBottom: 10,
   },
   nextStepsText: {
     fontSize: 14,
-    color: '#27ae60',
+    color: '#4A5160',
     lineHeight: 20,
   },
   footer: {
     padding: 20,
     alignItems: 'center',
-    borderTopWidth: 1,
-    borderTopColor: '#e9ecef',
+    borderTopWidth: 0,
+    backgroundColor: colors.brandBlack,
   },
   footerText: {
     fontSize: 14,
-    color: '#636e72',
+    color: colors.textOnBlack,
     fontStyle: 'italic',
   },
 });

@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { ObjectifPersonnel, UserProfile } from '../../types/ProfilingTypes';
 import { LABELS } from '../../utils/ProfilingUtils';
+import { colors } from '../../utils/theme';
 
 interface EtapeObjectifProps {
   profile: Partial<UserProfile>;
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   optionCardSelected: {
-    borderColor: '#00b894',
+    borderColor: colors.brandLime,
     borderWidth: 2,
     borderLeftWidth: 4,
     backgroundColor: '#f8fffd',
@@ -201,14 +202,14 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   optionTextSelected: {
-    color: '#00b894',
+    color: colors.brandLime,
     fontWeight: '600',
   },
   checkContainer: {
     width: 30,
     height: 30,
     borderRadius: 15,
-    backgroundColor: '#00b894',
+    backgroundColor: colors.brandLime,
     justifyContent: 'center',
     alignItems: 'center',
   },
