@@ -1,3 +1,7 @@
 <resources>
+<<<<<<< Current (Your changes)
     <string name="app_name">Nutrile Fit</string>
+=======
+    <string name="app_name">Nutril'way</string>
+>>>>>>> Incoming (Background Agent changes)
 </resources>
