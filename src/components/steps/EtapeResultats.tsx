@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { UserProfile } from '../../types/ProfilingTypes';
 import { LABELS, STATISTIQUES_PROFILS } from '../../utils/ProfilingUtils';
+import { colors } from '../../utils/theme';
 
 const { width } = Dimensions.get('window');
 
@@ -383,7 +384,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   primaryButton: {
-    backgroundColor: '#00b894',
+    backgroundColor: colors.brandLime,
     borderRadius: 12,
     padding: 16,
     alignItems: 'center',
@@ -397,7 +398,7 @@ const styles = StyleSheet.create({
   primaryButtonText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#fff',
+    color: colors.textOnLime,
   },
   secondaryButton: {
     backgroundColor: 'transparent',

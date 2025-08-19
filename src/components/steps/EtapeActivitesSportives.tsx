@@ -13,6 +13,7 @@ import {
   UserProfile 
 } from '../../types/ProfilingTypes';
 import { LABELS } from '../../utils/ProfilingUtils';
+import { colors } from '../../utils/theme';
 
 interface EtapeActivitesSportivesProps {
   profile: Partial<UserProfile>;
@@ -286,6 +287,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
+    alignItems: 'center',
     marginBottom: 30,
   },
   title: {
@@ -300,41 +302,42 @@ const styles = StyleSheet.create({
     color: '#636e72',
     textAlign: 'center',
     lineHeight: 22,
-    marginBottom: 15,
+    marginBottom: 10,
   },
   counterContainer: {
-    backgroundColor: '#f0f8ff',
+    backgroundColor: '#f8f9fa',
     borderRadius: 20,
     paddingHorizontal: 16,
     paddingVertical: 8,
     alignSelf: 'center',
+    marginTop: 8,
   },
   counterText: {
     fontSize: 14,
-    color: '#3498db',
+    color: '#636e72',
     fontWeight: '600',
   },
   categorySection: {
-    marginBottom: 30,
+    marginBottom: 12,
   },
   categoryHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 15,
+    marginBottom: 8,
   },
   categoryIndicator: {
-    width: 4,
-    height: 20,
-    borderRadius: 2,
-    marginRight: 10,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginRight: 8,
   },
   categoryTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
     color: '#2d3436',
   },
   activitesGrid: {
-    gap: 12,
+    gap: 10,
   },
   activiteCard: {
     backgroundColor: '#fff',
@@ -350,7 +353,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8fffd',
     elevation: 3,
     borderWidth: 2,
-    borderColor: '#00b894',
+    borderColor: colors.brandLime,
   },
   activiteContent: {
     flexDirection: 'row',
@@ -375,7 +378,7 @@ const styles = StyleSheet.create({
     color: '#2d3436',
   },
   activiteTextSelected: {
-    color: '#00b894',
+    color: colors.brandLime,
     fontWeight: '600',
   },
   checkContainer: {
