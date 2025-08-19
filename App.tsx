@@ -33,7 +33,7 @@ function App() {
     setShowProfiling(false);
     
     Alert.alert(
-      '🎉 Profil créé avec succès !',
+      'Profil créé avec succès',
       `Ton NutriType: ${profile.nutriType}\nID Profil: ${profile.profilId}`,
       [
         {
@@ -47,7 +47,7 @@ function App() {
   const handleViewProfile = () => {
     if (userProfile) {
       Alert.alert(
-        '👤 Ton Profil NutriBot',
+        'Ton profil',
         `NutriType: ${userProfile.nutriType}\n` +
         `Objectif: ${userProfile.objectif}\n` +
         `IMC: ${userProfile.donneesPhysiques.imc}\n` +
@@ -73,67 +73,49 @@ function App() {
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       
       <View style={styles.header}>
-        <Text style={styles.appTitle}>🤖 NUTR'ILEFIT</Text>
-        <Text style={styles.appSubtitle}>Ton assistant nutrition intelligent</Text>
+        <Text style={styles.appTitle}>nutril'way</Text>
+        <Text style={styles.appSubtitle}>Ton compagnon mieux-être & nutrition</Text>
       </View>
 
       <View style={styles.content}>
         {!userProfile ? (
           <View style={styles.welcomeSection}>
-            <Text style={styles.welcomeIcon}>📋</Text>
-            <Text style={styles.welcomeTitle}>
-              Bienvenue dans NutriBot !
-            </Text>
+            <Text style={styles.welcomeTitle}>Bienvenue sur nutril'way</Text>
             <Text style={styles.welcomeText}>
-              Commence par créer ton profil personnalisé pour recevoir des recommandations 
-              nutrition et sport adaptées à tes besoins.
+              Crée ton profil pour recevoir un accompagnement simple, sans blabla, adapté à tes objectifs.
             </Text>
             
             <TouchableOpacity 
               style={styles.startButton}
               onPress={handleStartProfiling}
             >
-              <Text style={styles.startButtonText}>
-                🚀 Commencer mon profilage
-              </Text>
+              <Text style={styles.startButtonText}>Commencer</Text>
             </TouchableOpacity>
 
             <View style={styles.featuresSection}>
               <Text style={styles.featuresTitle}>Ce que tu vas obtenir :</Text>
               
               <View style={styles.feature}>
-                <Text style={styles.featureIcon}>🧬</Text>
-                <Text style={styles.featureText}>
-                  Ton NutriType personnalisé parmi 70 profils possibles
-                </Text>
+                <Text style={styles.featureText}>Un profil nutrition personnalisé</Text>
               </View>
               
               <View style={styles.feature}>
-                <Text style={styles.featureIcon}>🎯</Text>
-                <Text style={styles.featureText}>
-                  Des recommandations adaptées à tes objectifs
-                </Text>
+                <Text style={styles.featureText}>Des recommandations claires</Text>
               </View>
               
               <View style={styles.feature}>
-                <Text style={styles.featureIcon}>📊</Text>
-                <Text style={styles.featureText}>
-                  Un suivi personnalisé basé sur 360M de profils
-                </Text>
+                <Text style={styles.featureText}>Un suivi simple au quotidien</Text>
               </View>
             </View>
           </View>
         ) : (
           <View style={styles.profileSection}>
-            <Text style={styles.profileIcon}>✅</Text>
             <Text style={styles.profileTitle}>
               Ton profil est configuré !
             </Text>
             
             <View style={styles.profileSummary}>
-              <Text style={styles.profileSummaryTitle}>
-                🧬 NutriType: {userProfile.nutriType}
-              </Text>
+              <Text style={styles.profileSummaryTitle}>NutriType: {userProfile.nutriType}</Text>
               <Text style={styles.profileSummaryText}>
                 Objectif: {userProfile.objectif}
               </Text>
@@ -150,23 +132,19 @@ function App() {
                 style={styles.actionButton}
                 onPress={handleViewProfile}
               >
-                <Text style={styles.actionButtonText}>
-                  👤 Voir mon profil complet
-                </Text>
+                <Text style={styles.actionButtonText}>Voir mon profil</Text>
               </TouchableOpacity>
 
               <TouchableOpacity 
                 style={[styles.actionButton, styles.secondaryActionButton]}
                 onPress={() => setShowProfiling(true)}
               >
-                <Text style={[styles.actionButtonText, styles.secondaryActionButtonText]}>
-                  ✏️ Modifier mon profil
-                </Text>
+                <Text style={[styles.actionButtonText, styles.secondaryActionButtonText]}>Modifier mon profil</Text>
               </TouchableOpacity>
             </View>
 
             <View style={styles.nextStepsSection}>
-              <Text style={styles.nextStepsTitle}>🚀 Prochaines fonctionnalités</Text>
+              <Text style={styles.nextStepsTitle}>Prochaines fonctionnalités</Text>
               <Text style={styles.nextStepsText}>
                 • Recommandations nutritionnelles personnalisées{'\n'}
                 • Plans d'entraînement adaptés{'\n'}
@@ -179,9 +157,7 @@ function App() {
       </View>
 
       <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          Développé avec ❤️ pour une nutrition personnalisée
-        </Text>
+        <Text style={styles.footerText}>Conçu pour une nutrition personnalisée</Text>
       </View>
     </SafeAreaView>
   );

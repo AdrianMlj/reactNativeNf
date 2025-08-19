@@ -29,47 +29,38 @@ const EtapeObjectif: React.FC<EtapeObjectifProps> = ({
   const objectifs = [
     {
       value: ObjectifPersonnel.PERDRE_POIDS,
-      icon: '⚖️',
       color: '#e74c3c'
     },
     {
       value: ObjectifPersonnel.PRENDRE_POIDS,
-      icon: '💪',
       color: '#27ae60'
     },
     {
       value: ObjectifPersonnel.MAINTENIR_POIDS,
-      icon: '⚖️',
       color: '#3498db'
     },
     {
       value: ObjectifPersonnel.AMELIORER_ENERGIE,
-      icon: '⚡',
       color: '#f39c12'
     },
     {
       value: ObjectifPersonnel.GERER_STRESS,
-      icon: '🧘',
       color: '#9b59b6'
     },
     {
       value: ObjectifPersonnel.PERFORMANCES_SPORTIVES,
-      icon: '🏃',
       color: '#e67e22'
     },
     {
       value: ObjectifPersonnel.MIEUX_DORMIR,
-      icon: '😴',
       color: '#34495e'
     },
     {
       value: ObjectifPersonnel.ACCOMPAGNEMENT_SANTE,
-      icon: '🩺',
       color: '#1abc9c'
     },
     {
       value: ObjectifPersonnel.MEILLEURE_RELATION_ALIMENTATION,
-      icon: '🥗',
       color: '#2ecc71'
     }
   ];
@@ -77,7 +68,7 @@ const EtapeObjectif: React.FC<EtapeObjectifProps> = ({
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>🎯 Quel est ton objectif principal ?</Text>
+        <Text style={styles.title}>Quel est ton objectif principal ?</Text>
         <Text style={styles.subtitle}>
           Sélectionne l'objectif qui te correspond le mieux pour personnaliser ton parcours
         </Text>
@@ -102,9 +93,7 @@ const EtapeObjectif: React.FC<EtapeObjectifProps> = ({
               activeOpacity={0.7}
             >
               <View style={styles.optionContent}>
-                <View style={[styles.iconContainer, { backgroundColor: option.color + '20' }]}>
-                  <Text style={styles.optionIcon}>{option.icon}</Text>
-                </View>
+                <View style={[styles.iconContainer, { backgroundColor: option.color + '20' }]} />
                 
                 <View style={styles.optionTextContainer}>
                   <Text style={[
@@ -115,11 +104,7 @@ const EtapeObjectif: React.FC<EtapeObjectifProps> = ({
                   </Text>
                 </View>
                 
-                {isSelected && (
-                  <View style={styles.checkContainer}>
-                    <Text style={styles.checkIcon}>✓</Text>
-                  </View>
-                )}
+                {isSelected && (<View style={styles.checkContainer} />)}
               </View>
             </TouchableOpacity>
           );
@@ -127,9 +112,7 @@ const EtapeObjectif: React.FC<EtapeObjectifProps> = ({
       </ScrollView>
 
       <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          💡 Tu pourras toujours modifier ton objectif plus tard
-        </Text>
+        <Text style={styles.footerText}>Tu pourras modifier ton objectif plus tard</Text>
       </View>
     </View>
   );

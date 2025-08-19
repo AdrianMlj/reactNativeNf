@@ -107,7 +107,7 @@ const EtapeDonneesPhysiques: React.FC<EtapeDonneesPhysiquesProps> = ({
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
-        <Text style={styles.title}>👤 Parlons un peu de toi</Text>
+        <Text style={styles.title}>Parlons un peu de toi</Text>
         <Text style={styles.subtitle}>
           Ces informations nous aident à personnaliser tes recommandations
         </Text>
@@ -260,9 +260,7 @@ const EtapeDonneesPhysiques: React.FC<EtapeDonneesPhysiquesProps> = ({
       </View>
 
       <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          🔒 Tes données personnelles sont sécurisées et ne seront jamais partagées
-        </Text>
+        <Text style={styles.footerText}>Tes données personnelles sont sécurisées et ne seront jamais partagées</Text>
       </View>
     </ScrollView>
   );

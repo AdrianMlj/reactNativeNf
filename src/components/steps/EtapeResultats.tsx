@@ -57,11 +57,8 @@ const EtapeResultats: React.FC<EtapeResultatsProps> = ({
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
-        <Text style={styles.celebration}>🎉</Text>
-        <Text style={styles.title}>Ton profil NutriBot est prêt !</Text>
-        <Text style={styles.subtitle}>
-          Voici le résumé de ton profilage personnalisé
-        </Text>
+        <Text style={styles.title}>Ton profil est prêt</Text>
+        <Text style={styles.subtitle}>Voici le résumé de ton profilage personnalisé</Text>
       </View>
 
       {/* NutriType */}
@@ -85,11 +82,11 @@ const EtapeResultats: React.FC<EtapeResultatsProps> = ({
 
       {/* Résumé du profil */}
       <View style={styles.summarySection}>
-        <Text style={styles.sectionTitle}>📊 Résumé de ton profil</Text>
+        <Text style={styles.sectionTitle}>Résumé de ton profil</Text>
         
         {/* Objectif */}
         <View style={styles.summaryCard}>
-          <Text style={styles.summaryCardTitle}>🎯 Objectif principal</Text>
+          <Text style={styles.summaryCardTitle}>Objectif principal</Text>
           <Text style={styles.summaryCardValue}>
             {LABELS.objectifs[profile.objectif]}
           </Text>
@@ -97,7 +94,7 @@ const EtapeResultats: React.FC<EtapeResultatsProps> = ({
 
         {/* Données physiques */}
         <View style={styles.summaryCard}>
-          <Text style={styles.summaryCardTitle}>👤 Données physiques</Text>
+          <Text style={styles.summaryCardTitle}>Données physiques</Text>
           <View style={styles.summaryRow}>
             <Text style={styles.summaryLabel}>Sexe:</Text>
             <Text style={styles.summaryValue}>
@@ -130,7 +127,7 @@ const EtapeResultats: React.FC<EtapeResultatsProps> = ({
 
         {/* Santé */}
         <View style={styles.summaryCard}>
-          <Text style={styles.summaryCardTitle}>🏥 Situations de santé</Text>
+          <Text style={styles.summaryCardTitle}>Situations de santé</Text>
           <Text style={styles.summaryCardValue}>
             {profile.donneesSante.nombreSituations === 0 
               ? 'Aucune situation particulière'
@@ -141,7 +138,7 @@ const EtapeResultats: React.FC<EtapeResultatsProps> = ({
 
         {/* Motivations */}
         <View style={styles.summaryCard}>
-          <Text style={styles.summaryCardTitle}>💫 Motivations</Text>
+          <Text style={styles.summaryCardTitle}>Motivations</Text>
           <Text style={styles.summaryCardValue}>
             {profile.motivationsBlockages.motivations.length} motivation{profile.motivationsBlockages.motivations.length > 1 ? 's' : ''} identifiée{profile.motivationsBlockages.motivations.length > 1 ? 's' : ''}
           </Text>
@@ -149,7 +146,7 @@ const EtapeResultats: React.FC<EtapeResultatsProps> = ({
 
         {/* Activités sportives */}
         <View style={styles.summaryCard}>
-          <Text style={styles.summaryCardTitle}>🏃‍♀️ Activités sportives</Text>
+          <Text style={styles.summaryCardTitle}>Activités sportives</Text>
           <Text style={styles.summaryCardValue}>
             {profile.activitesSportives.activites.length} activité{profile.activitesSportives.activites.length > 1 ? 's' : ''} sélectionnée{profile.activitesSportives.activites.length > 1 ? 's' : ''}
           </Text>
@@ -158,9 +155,8 @@ const EtapeResultats: React.FC<EtapeResultatsProps> = ({
 
       {/* Prochaines étapes */}
       <View style={styles.nextStepsSection}>
-        <Text style={styles.sectionTitle}>🚀 Prochaines étapes</Text>
+        <Text style={styles.sectionTitle}>Prochaines étapes</Text>
         <View style={styles.stepCard}>
-          <Text style={styles.stepIcon}>🎯</Text>
           <View style={styles.stepContent}>
             <Text style={styles.stepTitle}>Recommandations personnalisées</Text>
             <Text style={styles.stepDescription}>
@@ -170,7 +166,6 @@ const EtapeResultats: React.FC<EtapeResultatsProps> = ({
         </View>
         
         <View style={styles.stepCard}>
-          <Text style={styles.stepIcon}>📱</Text>
           <View style={styles.stepContent}>
             <Text style={styles.stepTitle}>Suivi quotidien</Text>
             <Text style={styles.stepDescription}>
@@ -180,11 +175,10 @@ const EtapeResultats: React.FC<EtapeResultatsProps> = ({
         </View>
 
         <View style={styles.stepCard}>
-          <Text style={styles.stepIcon}>🤖</Text>
           <View style={styles.stepContent}>
             <Text style={styles.stepTitle}>Accompagnement IA</Text>
             <Text style={styles.stepDescription}>
-              Bénéficie de l'accompagnement intelligent de NutriBot
+              Bénéficie d'un accompagnement intelligent
             </Text>
           </View>
         </View>
@@ -196,25 +190,19 @@ const EtapeResultats: React.FC<EtapeResultatsProps> = ({
           style={styles.primaryButton}
           onPress={onComplete}
         >
-          <Text style={styles.primaryButtonText}>
-            🎯 Commencer mon parcours
-          </Text>
+          <Text style={styles.primaryButtonText}>Commencer mon parcours</Text>
         </TouchableOpacity>
 
         <TouchableOpacity 
           style={styles.secondaryButton}
           onPress={onBack}
         >
-          <Text style={styles.secondaryButtonText}>
-            ← Modifier mon profil
-          </Text>
+          <Text style={styles.secondaryButtonText}>Modifier mon profil</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          🔒 Tes données sont sécurisées et ton profil peut être modifié à tout moment
-        </Text>
+        <Text style={styles.footerText}>Tes données sont sécurisées. Tu peux modifier ton profil à tout moment.</Text>
       </View>
     </ScrollView>
   );
