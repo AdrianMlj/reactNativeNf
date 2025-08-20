@@ -1,9 +1,4 @@
 {
-<<<<<<< Current (Your changes)
-  "name": "NutrileFit",
-  "displayName": "Nutrile Fit"
-=======
-  "name": "Nutrilway",
-  "displayName": "Nutril'way"
->>>>>>> Incoming (Background Agent changes)
+  "name": "nutrilway",
+  "displayName": "nutril'way"
 }

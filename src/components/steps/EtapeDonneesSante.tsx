@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { SituationSante, DonneesSante, UserProfile } from '../../types/ProfilingTypes';
 import { LABELS, calculerNombreSituationsSante } from '../../utils/ProfilingUtils';
+import { colors } from '../../utils/theme';
 
 interface EtapeDonneesSanteProps {
   profile: Partial<UserProfile>;
@@ -30,15 +31,11 @@ const EtapeDonneesSante: React.FC<EtapeDonneesSanteProps> = ({
     let nouvellesSituations: SituationSante[];
 
     if (situation === SituationSante.AUCUN) {
-      // Si "Aucun" est sélectionné, désélectionner tout le reste
       nouvellesSituations = situations.includes(SituationSante.AUCUN) ? [] : [SituationSante.AUCUN];
     } else {
-      // Pour les autres situations
       if (situations.includes(situation)) {
-        // Désélectionner cette situation
         nouvellesSituations = situations.filter(s => s !== situation);
       } else {
-        // Sélectionner cette situation et retirer "Aucun" s'il était sélectionné
         nouvellesSituations = [...situations.filter(s => s !== SituationSante.AUCUN), situation];
       }
     }
@@ -54,56 +51,16 @@ const EtapeDonneesSante: React.FC<EtapeDonneesSanteProps> = ({
   };
 
   const situationsSanteOptions = [
-    {
-      value: SituationSante.DIABETE,
-      icon: '🩺',
-      color: '#e74c3c'
-    },
-    {
-      value: SituationSante.HYPERTENSION,
-      icon: '❤️',
-      color: '#e74c3c'
-    },
-    {
-      value: SituationSante.CHOLESTEROL,
-      icon: '🧪',
-      color: '#f39c12'
-    },
-    {
-      value: SituationSante.TROUBLES_DIGESTIFS,
-      icon: '🤢',
-      color: '#e67e22'
-    },
-    {
-      value: SituationSante.STRESS_ANXIETE,
-      icon: '😰',
-      color: '#9b59b6'
-    },
-    {
-      value: SituationSante.FATIGUE_CHRONIQUE,
-      icon: '😴',
-      color: '#34495e'
-    },
-    {
-      value: SituationSante.TROUBLES_SOMMEIL,
-      icon: '🌙',
-      color: '#2c3e50'
-    },
-    {
-      value: SituationSante.DEPRESSION_LEGERE,
-      icon: '😔',
-      color: '#7f8c8d'
-    },
-    {
-      value: SituationSante.TROUBLES_MENSTRUELS,
-      icon: '🩸',
-      color: '#e91e63'
-    },
-    {
-      value: SituationSante.AUCUN,
-      icon: '✅',
-      color: '#27ae60'
-    }
+    { value: SituationSante.DIABETE, icon: '🩺', color: '#e74c3c' },
+    { value: SituationSante.HYPERTENSION, icon: '❤️', color: '#e74c3c' },
+    { value: SituationSante.CHOLESTEROL, icon: '🧪', color: '#f39c12' },
+    { value: SituationSante.TROUBLES_DIGESTIFS, icon: '🤢', color: '#e67e22' },
+    { value: SituationSante.STRESS_ANXIETE, icon: '😰', color: '#9b59b6' },
+    { value: SituationSante.FATIGUE_CHRONIQUE, icon: '😴', color: '#34495e' },
+    { value: SituationSante.TROUBLES_SOMMEIL, icon: '🌙', color: '#2c3e50' },
+    { value: SituationSante.DEPRESSION_LEGERE, icon: '😔', color: '#7f8c8d' },
+    { value: SituationSante.TROUBLES_MENSTRUELS, icon: '🩸', color: '#e91e63' },
+    { value: SituationSante.AUCUN, icon: '✅', color: '#27ae60' }
   ];
 
   const getNombreSituationsText = () => {
@@ -221,7 +178,7 @@ const styles = StyleSheet.create({
   },
   counterText: {
     fontSize: 14,
-    color: '#00b894',
+    color: colors.brandLime,
     fontWeight: '600',
   },
   optionsContainer: {
@@ -239,7 +196,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   optionCardSelected: {
-    borderColor: '#00b894',
+    borderColor: colors.brandLime,
     backgroundColor: '#f8fffd',
   },
   optionCardAucun: {
@@ -275,7 +232,7 @@ const styles = StyleSheet.create({
     color: '#2d3436',
   },
   optionTextSelected: {
-    color: '#00b894',
+    color: colors.brandLime,
     fontWeight: '600',
   },
   optionTextAucun: {
@@ -292,8 +249,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   checkboxSelected: {
-    backgroundColor: '#00b894',
-    borderColor: '#00b894',
+    backgroundColor: colors.brandLime,
+    borderColor: colors.brandLime,
   },
   checkIcon: {
     color: '#fff',

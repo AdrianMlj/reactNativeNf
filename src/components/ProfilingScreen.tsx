@@ -33,15 +33,17 @@ import {
   validerEtapeMotivationsBlockages,
   validerEtapeActivitesSportives
 } from '../utils/ProfilingUtils';
-
-// Import des composants d'étapes
-import EtapeObjectif from './steps/EtapeObjectif';
+import {
+  // Import des composants d'étapes
+  default as EtapeObjectif
+} from './steps/EtapeObjectif';
 import EtapeDonneesPhysiques from './steps/EtapeDonneesPhysiques';
 import EtapeDonneesSante from './steps/EtapeDonneesSante';
 import EtapeHabitudesAlimentaires from './steps/EtapeHabitudesAlimentaires';
 import EtapeMotivationsBlockages from './steps/EtapeMotivationsBlockages';
 import EtapeActivitesSportives from './steps/EtapeActivitesSportives';
 import EtapeResultats from './steps/EtapeResultats';
+import { colors } from '../utils/theme';
 
 const { width } = Dimensions.get('window');
 
@@ -265,29 +267,22 @@ const ProfilingScreen: React.FC<ProfilingScreenProps> = ({ onComplete }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#0E0F10',
   },
   header: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.brandBlack,
     paddingHorizontal: 20,
     paddingVertical: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e9ecef',
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#2d3436',
+    color: colors.textOnBlack,
     textAlign: 'center',
   },
   subtitle: {
     fontSize: 14,
-    color: '#636e72',
+    color: colors.brandLime,
     textAlign: 'center',
     marginTop: 2,
   },
@@ -296,18 +291,18 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     height: 6,
-    backgroundColor: '#e9ecef',
+    backgroundColor: '#26282B',
     borderRadius: 3,
     overflow: 'hidden',
   },
   progressFill: {
     height: '100%',
-    backgroundColor: '#00b894',
+    backgroundColor: colors.brandLime,
     borderRadius: 3,
   },
   progressText: {
     fontSize: 12,
-    color: '#636e72',
+    color: '#A0A6B0',
     textAlign: 'center',
     marginTop: 5,
   },
@@ -327,9 +322,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     paddingVertical: 15,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderTopColor: '#e9ecef',
+    backgroundColor: colors.brandBlack,
   },
   button: {
     paddingHorizontal: 20,
@@ -339,23 +332,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonPrimary: {
-    backgroundColor: '#00b894',
+    backgroundColor: colors.brandLime,
   },
   buttonSecondary: {
     backgroundColor: 'transparent',
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: colors.brandLime,
   },
   buttonDisabled: {
-    backgroundColor: '#ddd',
+    backgroundColor: '#2E3237',
   },
   buttonPrimaryText: {
-    color: '#fff',
+    color: colors.textOnLime,
     fontWeight: '600',
     fontSize: 16,
   },
   buttonSecondaryText: {
-    color: '#636e72',
+    color: colors.brandLime,
     fontWeight: '600',
     fontSize: 16,
   },

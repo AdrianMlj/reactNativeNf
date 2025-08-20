@@ -7,6 +7,7 @@ import {
   ScrollView
 } from 'react-native';
 import { HabitudesAlimentaires, UserProfile } from '../../types/ProfilingTypes';
+import { colors } from '../../utils/theme';
 
 interface EtapeHabitudesAlimentairesProps {
   profile: Partial<UserProfile>;
@@ -233,7 +234,7 @@ const styles = StyleSheet.create({
   },
   progressFill: {
     height: '100%',
-    backgroundColor: '#00b894',
+    backgroundColor: colors.brandLime,
     borderRadius: 3,
   },
   progressText: {
@@ -272,7 +273,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   optionButtonSelected: {
-    borderColor: '#00b894',
+    borderColor: colors.brandLime,
     backgroundColor: '#f8fffd',
     elevation: 2,
   },
@@ -301,14 +302,14 @@ const styles = StyleSheet.create({
     color: '#2d3436',
   },
   optionTextSelected: {
-    color: '#00b894',
+    color: colors.brandLime,
     fontWeight: '600',
   },
   checkContainer: {
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#00b894',
+    backgroundColor: colors.brandLime,
     justifyContent: 'center',
     alignItems: 'center',
   },

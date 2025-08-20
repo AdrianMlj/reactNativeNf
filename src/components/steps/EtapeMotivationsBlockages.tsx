@@ -12,6 +12,7 @@ import {
   MotivationsBlockages, 
   UserProfile 
 } from '../../types/ProfilingTypes';
+import { colors } from '../../utils/theme';
 
 interface EtapeMotivationsBlockagesProps {
   profile: Partial<UserProfile>;
@@ -284,38 +285,39 @@ const styles = StyleSheet.create({
     color: '#636e72',
     textAlign: 'center',
     lineHeight: 22,
+    marginBottom: 15,
   },
   section: {
-    marginBottom: 40,
-  },
-  sectionHeader: {
     marginBottom: 20,
   },
+  sectionHeader: {
+    marginBottom: 10,
+  },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '600',
     color: '#2d3436',
-    marginBottom: 8,
   },
   sectionSubtitle: {
     fontSize: 14,
     color: '#636e72',
-    marginBottom: 12,
+    marginTop: 4,
   },
   counterBadge: {
-    backgroundColor: '#e8f5e8',
-    borderRadius: 20,
+    alignSelf: 'flex-start',
     paddingHorizontal: 12,
     paddingVertical: 6,
-    alignSelf: 'flex-start',
+    borderRadius: 999,
+    backgroundColor: '#f8f9fa',
+    marginTop: 8,
   },
   counterText: {
     fontSize: 12,
-    color: '#27ae60',
+    color: '#636e72',
     fontWeight: '600',
   },
   optionsContainer: {
-    gap: 12,
+    gap: 10,
   },
   optionCard: {
     backgroundColor: '#fff',
@@ -332,7 +334,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   optionCardSelected: {
-    borderColor: '#00b894',
+    borderColor: colors.brandLime,
     backgroundColor: '#f8fffd',
     elevation: 2,
   },
@@ -366,7 +368,7 @@ const styles = StyleSheet.create({
     color: '#2d3436',
   },
   optionTextSelected: {
-    color: '#00b894',
+    color: colors.brandLime,
     fontWeight: '600',
   },
   blocageTextSelected: {
@@ -383,8 +385,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   checkboxSelected: {
-    backgroundColor: '#00b894',
-    borderColor: '#00b894',
+    backgroundColor: colors.brandLime,
+    borderColor: colors.brandLime,
   },
   blocageCheckboxSelected: {
     backgroundColor: '#e74c3c',
