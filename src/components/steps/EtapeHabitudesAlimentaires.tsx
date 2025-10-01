@@ -107,123 +107,82 @@ const EtapeHabitudesAlimentaires: React.FC<EtapeHabitudesAlimentairesProps> = ({
   };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.header}>
-        <Text style={styles.title}>🍴 Tes habitudes alimentaires</Text>
-        <Text style={styles.subtitle}>
-          Réponds à ces questions pour personnaliser tes recommandations nutritionnelles
-        </Text>
+    <View style={styles.wrapper}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={{ paddingBottom: 120 }}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.progressContainer}>
           <View style={styles.progressBar}>
             <View 
               style={[styles.progressFill, { width: `${getProgressPercentage()}%` }]} 
             />
           </View>
-          <Text style={styles.progressText}>
-            {questions.filter(q => habitudes[q.key] !== undefined).length} / {questions.length} complétées
-          </Text>
         </View>
-      </View>
 
-      {questions.map((question, index) => {
-        const currentValue = habitudes[question.key];
-        
-        return (
-          <View key={question.key} style={styles.questionContainer}>
-            <Text style={styles.questionTitle}>{question.title}</Text>
-            
-            <View style={styles.optionsGrid}>
-              {question.options.map((option) => {
-                const isSelected = currentValue === option.value;
-                
-                return (
-                  <TouchableOpacity
-                    key={option.value}
-                    style={[
-                      styles.optionButton,
-                      isSelected && styles.optionButtonSelected,
-                      { borderLeftColor: option.color }
-                    ]}
-                    onPress={() => handleUpdateHabitudes({ [question.key]: option.value })}
-                  >
-                    <View style={[
-                      styles.optionIndicator,
-                      { backgroundColor: option.color + '20' }
-                    ]}>
-                      <View style={[
-                        styles.optionDot,
-                        { backgroundColor: option.color },
-                        isSelected && styles.optionDotSelected
-                      ]} />
-                    </View>
-                    
-                    <Text style={[
-                      styles.optionText,
-                      isSelected && styles.optionTextSelected
-                    ]}>
-                      {option.label}
-                    </Text>
-                    
-                    {isSelected && (
-                      <View style={styles.checkContainer}>
-                        <Text style={styles.checkIcon}>✓</Text>
-                      </View>
-                    )}
-                  </TouchableOpacity>
-                );
-              })}
+        {questions.map((question, index) => {
+          const currentValue = habitudes[question.key];
+          return (
+            <View key={question.key} style={styles.questionContainer}>
+              <Text style={styles.questionTitle}>{question.title}</Text>
+              <View style={styles.optionsGrid}>
+                {question.options.map((option) => {
+                  const isSelected = currentValue === option.value;
+                  return (
+                    <TouchableOpacity
+                      key={option.value}
+                      style={[
+                        styles.optionButton,
+                        isSelected && styles.optionButtonSelected
+                      ]}
+                      onPress={() => handleUpdateHabitudes({ [question.key]: option.value })}
+                    >
+                      <Text style={[
+                        styles.optionText,
+                        isSelected && styles.optionTextSelected
+                      ]}>
+                        {option.label}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
             </View>
-          </View>
-        );
-      })}
-
-      <View style={styles.tipsContainer}>
-        <Text style={styles.tipsTitle}>💡 Le savais-tu ?</Text>
-        <Text style={styles.tipsText}>
-          • Une alimentation équilibrée avec 5 portions de légumes par jour améliore significativement ta santé
-        </Text>
-        <Text style={styles.tipsText}>
-          • Boire 2L d'eau par jour aide à maintenir un bon métabolisme
-        </Text>
-        <Text style={styles.tipsText}>
-          • Limiter les produits transformés réduit l'apport en additifs et conservateurs
-        </Text>
+          );
+        })}
+      </ScrollView>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={[
+            styles.continueButton,
+            !canContinue && styles.continueButtonDisabled
+          ]}
+          onPress={onNext}
+          activeOpacity={canContinue ? 0.8 : 1}
+          disabled={!canContinue}
+        >
+          <Text style={styles.continueButtonText}>CONTINUE</Text>
+        </TouchableOpacity>
       </View>
-
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          📊 Ces données nous aident à calculer ton profil nutritionnel personnalisé
-        </Text>
-      </View>
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   container: {
     flex: 1,
-  },
-  header: {
-    marginBottom: 30,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#2d3436',
-    textAlign: 'center',
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#636e72',
-    textAlign: 'center',
-    lineHeight: 22,
-    marginBottom: 20,
+    paddingHorizontal: 24,
+    paddingTop: 40,
   },
   progressContainer: {
-    backgroundColor: '#f8f9fa',
-    borderRadius: 12,
-    padding: 15,
+    width: '100%',
+    marginBottom: 24,
+    alignItems: 'center',
   },
   progressBar: {
     height: 6,
@@ -231,124 +190,74 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     overflow: 'hidden',
     marginBottom: 8,
+    width: '100%',
   },
   progressFill: {
     height: '100%',
     backgroundColor: colors.brandLime,
     borderRadius: 3,
   },
-  progressText: {
-    fontSize: 12,
-    color: '#636e72',
-    textAlign: 'center',
-    fontWeight: '500',
-  },
   questionContainer: {
-    marginBottom: 30,
+    marginBottom: 32,
   },
   questionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#2d3436',
-    marginBottom: 15,
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#222',
+    textAlign: 'center',
+    marginBottom: 18,
   },
   optionsGrid: {
-    gap: 10,
+    gap: 14,
   },
   optionButton: {
     backgroundColor: '#fff',
-    borderRadius: 12,
-    borderLeftWidth: 4,
-    borderRightWidth: 1,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: '#e9ecef',
-    flexDirection: 'row',
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#bbb',
+    paddingVertical: 16,
+    paddingHorizontal: 12,
+    marginBottom: 0,
     alignItems: 'center',
-    padding: 16,
-    elevation: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
+    justifyContent: 'center',
   },
   optionButtonSelected: {
+    backgroundColor: colors.brandLime,
     borderColor: colors.brandLime,
-    backgroundColor: '#f8fffd',
-    elevation: 2,
-  },
-  optionIndicator: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 12,
-  },
-  optionDot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-  },
-  optionDotSelected: {
-    width: 16,
-    height: 16,
-    borderRadius: 8,
   },
   optionText: {
-    flex: 1,
     fontSize: 16,
+    color: '#222',
     fontWeight: '500',
-    color: '#2d3436',
+    textAlign: 'center',
   },
   optionTextSelected: {
-    color: colors.brandLime,
-    fontWeight: '600',
-  },
-  checkContainer: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: colors.brandLime,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  checkIcon: {
     color: '#fff',
-    fontSize: 14,
     fontWeight: 'bold',
   },
-  tipsContainer: {
-    backgroundColor: '#fff3cd',
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 24,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    paddingHorizontal: 24,
+  },
+  continueButton: {
+    backgroundColor: '#222',
     borderRadius: 12,
-    padding: 16,
-    marginTop: 20,
-    borderLeftWidth: 4,
-    borderLeftColor: '#ffc107',
+    paddingVertical: 18,
+    width: '100%',
+    alignItems: 'center',
   },
-  tipsTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#856404',
-    marginBottom: 10,
+  continueButtonDisabled: {
+    backgroundColor: '#bbb',
   },
-  tipsText: {
-    fontSize: 14,
-    color: '#856404',
-    marginBottom: 5,
-    lineHeight: 18,
-  },
-  footer: {
-    marginTop: 20,
-    paddingTop: 20,
-    borderTopWidth: 1,
-    borderTopColor: '#e9ecef',
-  },
-  footerText: {
-    fontSize: 14,
-    color: '#636e72',
-    textAlign: 'center',
-    fontStyle: 'italic',
+  continueButtonText: {
+    color: colors.brandLime,
+    fontWeight: 'bold',
+    fontSize: 18,
+    letterSpacing: 0.5,
   },
 });
 

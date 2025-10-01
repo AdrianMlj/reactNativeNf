@@ -30,188 +30,205 @@ const EtapeObjectif: React.FC<EtapeObjectifProps> = ({
   const objectifs = [
     {
       value: ObjectifPersonnel.PERDRE_POIDS,
-      color: '#e74c3c'
+      color: '#e74c3c',
+      label: LABELS.objectifs[ObjectifPersonnel.PERDRE_POIDS]
     },
     {
       value: ObjectifPersonnel.PRENDRE_POIDS,
-      color: '#27ae60'
+      color: '#27ae60',
+      label: LABELS.objectifs[ObjectifPersonnel.PRENDRE_POIDS]
     },
     {
       value: ObjectifPersonnel.MAINTENIR_POIDS,
-      color: '#3498db'
-    },
-    {
-      value: ObjectifPersonnel.AMELIORER_ENERGIE,
-      color: '#f39c12'
-    },
-    {
-      value: ObjectifPersonnel.GERER_STRESS,
-      color: '#9b59b6'
+      color: '#3498db',
+      label: LABELS.objectifs[ObjectifPersonnel.MAINTENIR_POIDS]
     },
     {
       value: ObjectifPersonnel.PERFORMANCES_SPORTIVES,
-      color: '#e67e22'
+      color: '#e67e22',
+      label: LABELS.objectifs[ObjectifPersonnel.PERFORMANCES_SPORTIVES]
+    },
+    {
+      value: ObjectifPersonnel.AMELIORER_ENERGIE,
+      color: '#f39c12',
+      label: LABELS.objectifs[ObjectifPersonnel.AMELIORER_ENERGIE]
+    },
+    {
+      value: ObjectifPersonnel.GERER_STRESS,
+      color: '#9b59b6',
+      label: LABELS.objectifs[ObjectifPersonnel.GERER_STRESS]
     },
     {
       value: ObjectifPersonnel.MIEUX_DORMIR,
-      color: '#34495e'
+      color: '#34495e',
+      label: LABELS.objectifs[ObjectifPersonnel.MIEUX_DORMIR]
     },
     {
       value: ObjectifPersonnel.ACCOMPAGNEMENT_SANTE,
-      color: '#1abc9c'
+      color: '#1abc9c',
+      label: LABELS.objectifs[ObjectifPersonnel.ACCOMPAGNEMENT_SANTE]
     },
     {
       value: ObjectifPersonnel.MEILLEURE_RELATION_ALIMENTATION,
-      color: '#2ecc71'
+      color: '#2ecc71',
+      label: LABELS.objectifs[ObjectifPersonnel.MEILLEURE_RELATION_ALIMENTATION]
     }
   ];
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Quel est ton objectif principal ?</Text>
-        <Text style={styles.subtitle}>
-          Sélectionne l'objectif qui te correspond le mieux pour personnaliser ton parcours
-        </Text>
-      </View>
-
-      <ScrollView 
-        style={styles.optionsContainer}
+    <View style={styles.wrapper}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={{ paddingBottom: 120 }}
         showsVerticalScrollIndicator={false}
       >
-        {objectifs.map((option) => {
-          const isSelected = profile.objectif === option.value;
-          
-          return (
-            <TouchableOpacity
-              key={option.value}
-              style={[
-                styles.optionCard,
-                isSelected && styles.optionCardSelected,
-                { borderLeftColor: option.color }
-              ]}
-              onPress={() => handleSelectObjectif(option.value)}
-              activeOpacity={0.7}
-            >
-              <View style={styles.optionContent}>
-                <View style={[styles.iconContainer, { backgroundColor: option.color + '20' }]} />
-                
-                <View style={styles.optionTextContainer}>
-                  <Text style={[
-                    styles.optionText,
-                    isSelected && styles.optionTextSelected
-                  ]}>
-                    {LABELS.objectifs[option.value]}
-                  </Text>
-                </View>
-                
-                {isSelected && (<View style={styles.checkContainer} />)}
-              </View>
-            </TouchableOpacity>
-          );
-        })}
-      </ScrollView>
+        <View style={styles.header}>
+          <Text style={styles.title}>Sur le plan du poids</Text>
+        </View>
 
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>Tu pourras modifier ton objectif plus tard</Text>
+        <View style={styles.optionsContainer}>
+          {objectifs.slice(0, 4).map((option) => {
+            const isSelected = profile.objectif === option.value;
+            return (
+              <TouchableOpacity
+                key={option.value}
+                style={[
+                  styles.optionButton,
+                  isSelected && styles.optionButtonSelected
+                ]}
+                onPress={() => handleSelectObjectif(option.value)}
+                activeOpacity={0.8}
+              >
+                <Text style={[
+                  styles.optionText,
+                  isSelected && styles.optionTextSelected
+                ]}>
+                  {option.label}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+
+        {/* <View style={styles.header}>
+          <Text style={styles.title}>Et sur le plan du bien-être ?</Text>
+        </View> */}
+        <View style={styles.optionsContainer}>
+          {objectifs.slice(4, 8).map((option) => {
+            const isSelected = profile.objectif === option.value;
+            return (
+              <TouchableOpacity
+                key={option.value}
+                style={[
+                  styles.optionButton,
+                  isSelected && styles.optionButtonSelected
+                ]}
+                onPress={() => handleSelectObjectif(option.value)}
+                activeOpacity={0.8}
+              >
+                <Text style={[
+                  styles.optionText,
+                  isSelected && styles.optionTextSelected
+                ]}>
+                  {option.label}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      </ScrollView>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={[
+            styles.continueButton,
+            !canContinue && styles.continueButtonDisabled
+          ]}
+          onPress={onNext}
+          activeOpacity={canContinue ? 0.8 : 1}
+          disabled={!canContinue}
+        >
+          <Text style={styles.continueButtonText}>CONTINUE</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   container: {
     flex: 1,
+    paddingHorizontal: 24,
+    paddingTop: 40,
   },
   header: {
-    marginBottom: 30,
+    alignItems: 'center',
+    marginBottom: 24,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#2d3436',
+    color: '#222',
     textAlign: 'center',
     marginBottom: 10,
   },
-  subtitle: {
-    fontSize: 16,
-    color: '#636e72',
-    textAlign: 'center',
-    lineHeight: 22,
-  },
   optionsContainer: {
-    flex: 1,
+    marginBottom: 24,
+    gap: 16,
   },
-  optionCard: {
+  optionButton: {
     backgroundColor: '#fff',
     borderRadius: 12,
-    marginBottom: 12,
-    borderLeftWidth: 4,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-  },
-  optionCardSelected: {
-    borderColor: colors.brandLime,
     borderWidth: 2,
-    borderLeftWidth: 4,
-    backgroundColor: '#f8fffd',
-  },
-  optionContent: {
-    flexDirection: 'row',
+    borderColor: '#eee',
+    paddingVertical: 18,
+    paddingHorizontal: 16,
+    marginBottom: 0,
     alignItems: 'center',
-    padding: 16,
+    shadowColor: '#000',
+    shadowOpacity: 0.04,
+    shadowRadius: 2,
+    elevation: 1,
   },
-  iconContainer: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 15,
-  },
-  optionIcon: {
-    fontSize: 24,
-  },
-  optionTextContainer: {
-    flex: 1,
+  optionButtonSelected: {
+    backgroundColor: colors.brandLime,
+    borderColor: colors.brandLime,
   },
   optionText: {
     fontSize: 16,
+    color: '#222',
     fontWeight: '500',
-    color: '#2d3436',
-    lineHeight: 20,
   },
   optionTextSelected: {
-    color: colors.brandLime,
-    fontWeight: '600',
-  },
-  checkContainer: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    backgroundColor: colors.brandLime,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  checkIcon: {
     color: '#fff',
-    fontSize: 16,
     fontWeight: 'bold',
   },
-  footer: {
-    marginTop: 20,
-    paddingTop: 20,
-    borderTopWidth: 1,
-    borderTopColor: '#e9ecef',
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 24,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    paddingHorizontal: 24,
   },
-  footerText: {
-    fontSize: 14,
-    color: '#636e72',
-    textAlign: 'center',
-    fontStyle: 'italic',
+  continueButton: {
+    backgroundColor: '#222',
+    borderRadius: 12,
+    paddingVertical: 18,
+    width: '100%',
+    alignItems: 'center',
+  },
+  continueButtonDisabled: {
+    backgroundColor: '#bbb',
+  },
+  continueButtonText: {
+    color: colors.brandLime,
+    fontWeight: 'bold',
+    fontSize: 18,
+    letterSpacing: 0.5,
   },
 });
 

@@ -96,25 +96,25 @@ const EtapeMotivationsBlockages: React.FC<EtapeMotivationsBlockagesProps> = ({
   const blocagesOptions = [
     {
       value: Blocage.MANQUE_MOTIVATION,
-      label: 'Manque de motivation',
+      label: 'Je manque de motivation',
       icon: '😴',
       color: '#7f8c8d'
     },
     {
       value: Blocage.ENTOURAGE_DECOURAGEANT,
-      label: 'Entourage décourageant',
+      label: 'Mon entourage me décourage',
       icon: '😞',
       color: '#e74c3c'
     },
     {
       value: Blocage.MANQUE_TEMPS,
-      label: 'Manque de temps',
+      label: 'Je n\'ai pas le temps',
       icon: '⏰',
       color: '#f39c12'
     },
     {
       value: Blocage.DIFFICULTE_FINANCIERE,
-      label: 'Difficulté financière',
+      label: 'C\'est compliqué financièrement',
       icon: '💸',
       color: '#e67e22'
     },
@@ -127,300 +127,181 @@ const EtapeMotivationsBlockages: React.FC<EtapeMotivationsBlockagesProps> = ({
   ];
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.header}>
-        <Text style={styles.title}>💫 Motivations & Blocages</Text>
-        <Text style={styles.subtitle}>
-          Comprendre tes motivations et obstacles nous aide à personnaliser ton accompagnement
-        </Text>
-      </View>
-
-      {/* Section Motivations */}
-      <View style={styles.section}>
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>🌟 Qu'est-ce qui te motive ?</Text>
-          <Text style={styles.sectionSubtitle}>
-            Sélectionne toutes tes motivations (choix multiples)
-          </Text>
-          <View style={styles.counterBadge}>
-            <Text style={styles.counterText}>
-              {motivations.length} motivation{motivations.length > 1 ? 's' : ''} sélectionnée{motivations.length > 1 ? 's' : ''}
-            </Text>
+    <View style={styles.wrapper}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={{ paddingBottom: 120 }}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.progressContainer}>
+          <View style={styles.progressBar}>
+            <View style={[styles.progressFill, { width: '50%' }]} />
           </View>
         </View>
 
+        <Text style={styles.title}>💪 Qu’est-ce qui te motive à te lancer ?</Text>
         <View style={styles.optionsContainer}>
           {motivationsOptions.map((option) => {
             const isSelected = motivations.includes(option.value);
-            
             return (
               <TouchableOpacity
                 key={option.value}
                 style={[
-                  styles.optionCard,
-                  isSelected && styles.optionCardSelected,
-                  { borderLeftColor: option.color }
+                  styles.optionButton,
+                  isSelected && styles.optionButtonSelected
                 ]}
                 onPress={() => handleToggleMotivation(option.value)}
               >
-                <View style={styles.optionContent}>
-                  <View style={[
-                    styles.iconContainer,
-                    { backgroundColor: option.color + '20' }
-                  ]}>
-                    <Text style={styles.optionIcon}>{option.icon}</Text>
-                  </View>
-                  
-                  <Text style={[
-                    styles.optionText,
-                    isSelected && styles.optionTextSelected
-                  ]}>
-                    {option.label}
-                  </Text>
-                  
-                  <View style={[
-                    styles.checkbox,
-                    isSelected && styles.checkboxSelected
-                  ]}>
-                    {isSelected && <Text style={styles.checkIcon}>✓</Text>}
-                  </View>
-                </View>
+                <Text style={[
+                  styles.optionText,
+                  isSelected && styles.optionTextSelected
+                ]}>
+                  {option.label}
+                </Text>
               </TouchableOpacity>
             );
           })}
         </View>
-      </View>
 
-      {/* Section Blocages */}
-      <View style={styles.section}>
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>🚧 Quels sont tes principaux obstacles ?</Text>
-          <Text style={styles.sectionSubtitle}>
-            Identifier tes blocages nous aide à les surmonter ensemble
-          </Text>
-          <View style={styles.counterBadge}>
-            <Text style={styles.counterText}>
-              {blocages.length} blocage{blocages.length > 1 ? 's' : ''} sélectionné{blocages.length > 1 ? 's' : ''}
-            </Text>
-          </View>
-        </View>
-
+        <Text style={styles.title}>🚫 Qu’est-ce qui peut te freiner ?</Text>
         <View style={styles.optionsContainer}>
           {blocagesOptions.map((option) => {
             const isSelected = blocages.includes(option.value);
-            
             return (
               <TouchableOpacity
                 key={option.value}
                 style={[
-                  styles.optionCard,
-                  styles.blocageCard,
-                  isSelected && styles.blocageCardSelected,
-                  { borderLeftColor: option.color }
+                  styles.optionButton,
+                  isSelected && styles.optionButtonSelected
                 ]}
                 onPress={() => handleToggleBlocage(option.value)}
               >
-                <View style={styles.optionContent}>
-                  <View style={[
-                    styles.iconContainer,
-                    { backgroundColor: option.color + '20' }
-                  ]}>
-                    <Text style={styles.optionIcon}>{option.icon}</Text>
-                  </View>
-                  
-                  <Text style={[
-                    styles.optionText,
-                    isSelected && styles.blocageTextSelected
-                  ]}>
-                    {option.label}
-                  </Text>
-                  
-                  <View style={[
-                    styles.checkbox,
-                    isSelected && styles.blocageCheckboxSelected
-                  ]}>
-                    {isSelected && <Text style={styles.checkIcon}>✓</Text>}
-                  </View>
-                </View>
+                <Text style={[
+                  styles.optionText,
+                  isSelected && styles.optionTextSelected
+                ]}>
+                  {option.label}
+                </Text>
               </TouchableOpacity>
             );
           })}
         </View>
-      </View>
 
-      <View style={styles.insightContainer}>
-        <Text style={styles.insightTitle}>🧠 Le saviez-vous ?</Text>
-        <Text style={styles.insightText}>
-          Identifier clairement tes motivations et obstacles est la première étape vers le succès. 
-          Notre IA utilisera ces informations pour adapter tes recommandations et t'accompagner 
-          de manière personnalisée.
-        </Text>
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>
+            Il n’y a pas de bonne ou mauvaise réponse — mieux on te connaît, mieux on peut t’aider à réussir.
+          </Text>
+        </View>
+      </ScrollView>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={[
+            styles.continueButton,
+            !canContinue && styles.continueButtonDisabled
+          ]}
+          onPress={onNext}
+          activeOpacity={canContinue ? 0.8 : 1}
+          disabled={!canContinue}
+        >
+          <Text style={styles.continueButtonText}>CONTINUE</Text>
+        </TouchableOpacity>
       </View>
-
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          🎯 Ces informations nous permettent de créer un accompagnement sur-mesure
-        </Text>
-      </View>
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   container: {
     flex: 1,
+    paddingHorizontal: 24,
+    paddingTop: 40,
   },
-  header: {
-    marginBottom: 30,
+  progressContainer: {
+    width: '100%',
+    marginBottom: 24,
+    alignItems: 'center',
+  },
+  progressBar: {
+    height: 6,
+    backgroundColor: '#e9ecef',
+    borderRadius: 3,
+    overflow: 'hidden',
+    marginBottom: 8,
+    width: '100%',
+  },
+  progressFill: {
+    height: '100%',
+    backgroundColor: colors.brandLime,
+    borderRadius: 3,
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
-    color: '#2d3436',
+    color: '#222',
     textAlign: 'center',
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#636e72',
-    textAlign: 'center',
-    lineHeight: 22,
-    marginBottom: 15,
-  },
-  section: {
-    marginBottom: 20,
-  },
-  sectionHeader: {
-    marginBottom: 10,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#2d3436',
-  },
-  sectionSubtitle: {
-    fontSize: 14,
-    color: '#636e72',
-    marginTop: 4,
-  },
-  counterBadge: {
-    alignSelf: 'flex-start',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 999,
-    backgroundColor: '#f8f9fa',
-    marginTop: 8,
-  },
-  counterText: {
-    fontSize: 12,
-    color: '#636e72',
-    fontWeight: '600',
+    marginBottom: 18,
   },
   optionsContainer: {
-    gap: 10,
+    marginBottom: 24,
+    gap: 14,
   },
-  optionCard: {
+  optionButton: {
     backgroundColor: '#fff',
-    borderRadius: 12,
-    borderLeftWidth: 4,
-    borderRightWidth: 1,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: '#e9ecef',
-    elevation: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-  },
-  optionCardSelected: {
-    borderColor: colors.brandLime,
-    backgroundColor: '#f8fffd',
-    elevation: 2,
-  },
-  blocageCard: {
-    borderLeftColor: '#e74c3c',
-  },
-  blocageCardSelected: {
-    borderColor: '#e74c3c',
-    backgroundColor: '#fdf2f2',
-  },
-  optionContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 16,
-  },
-  iconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 15,
-  },
-  optionIcon: {
-    fontSize: 20,
-  },
-  optionText: {
-    flex: 1,
-    fontSize: 16,
-    fontWeight: '500',
-    color: '#2d3436',
-  },
-  optionTextSelected: {
-    color: colors.brandLime,
-    fontWeight: '600',
-  },
-  blocageTextSelected: {
-    color: '#e74c3c',
-    fontWeight: '600',
-  },
-  checkbox: {
-    width: 24,
-    height: 24,
-    borderRadius: 4,
+    borderRadius: 10,
     borderWidth: 2,
-    borderColor: '#ddd',
-    justifyContent: 'center',
+    borderColor: '#bbb',
+    paddingVertical: 16,
+    paddingHorizontal: 12,
+    marginBottom: 0,
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  checkboxSelected: {
+  optionButtonSelected: {
     backgroundColor: colors.brandLime,
     borderColor: colors.brandLime,
   },
-  blocageCheckboxSelected: {
-    backgroundColor: '#e74c3c',
-    borderColor: '#e74c3c',
+  optionText: {
+    fontSize: 16,
+    color: '#222',
+    fontWeight: '500',
+    textAlign: 'center',
   },
-  checkIcon: {
+  optionTextSelected: {
     color: '#fff',
-    fontSize: 14,
     fontWeight: 'bold',
   },
-  insightContainer: {
-    backgroundColor: '#f0f8ff',
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 24,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    paddingHorizontal: 24,
+  },
+  continueButton: {
+    backgroundColor: '#222',
     borderRadius: 12,
-    padding: 16,
-    marginTop: 20,
-    borderLeftWidth: 4,
-    borderLeftColor: '#3498db',
+    paddingVertical: 18,
+    width: '100%',
+    alignItems: 'center',
   },
-  insightTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#2980b9',
-    marginBottom: 10,
+  continueButtonDisabled: {
+    backgroundColor: '#bbb',
   },
-  insightText: {
-    fontSize: 14,
-    color: '#2980b9',
-    lineHeight: 20,
+  continueButtonText: {
+    color: colors.brandLime,
+    fontWeight: 'bold',
+    fontSize: 18,
+    letterSpacing: 0.5,
   },
   footer: {
     marginTop: 20,
-    paddingTop: 20,
-    borderTopWidth: 1,
-    borderTopColor: '#e9ecef',
+    alignItems: 'center',
+    marginBottom: 80,
   },
   footerText: {
     fontSize: 14,

@@ -28,6 +28,11 @@ const EtapeDonneesPhysiques: React.FC<EtapeDonneesPhysiquesProps> = ({
   const [donnees, setDonnees] = useState<Partial<DonneesPhysiques>>(
     profile.donneesPhysiques || {}
   );
+  const [dateNaissance, setDateNaissance] = useState({
+    jour: '',
+    mois: '',
+    annee: ''
+  });
 
   const handleUpdateDonnees = (updates: Partial<DonneesPhysiques>) => {
     const nouvellesDonnees = { ...donnees, ...updates };
@@ -52,6 +57,37 @@ const EtapeDonneesPhysiques: React.FC<EtapeDonneesPhysiquesProps> = ({
     }
   };
 
+  // Calcul de l'âge à partir de la date de naissance
+  const calculerAge = (jour: string, mois: string, annee: string): number | undefined => {
+    if (!jour || !mois || !annee) return undefined;
+    
+    const jourNum = parseInt(jour, 10);
+    const moisNum = parseInt(mois, 10);
+    const anneeNum = parseInt(annee, 10);
+    
+    if (isNaN(jourNum) || isNaN(moisNum) || isNaN(anneeNum)) return undefined;
+    
+    const today = new Date();
+    const naissance = new Date(anneeNum, moisNum - 1, jourNum);
+    
+    let age = today.getFullYear() - naissance.getFullYear();
+    const m = today.getMonth() - naissance.getMonth();
+    
+    if (m < 0 || (m === 0 && today.getDate() < naissance.getDate())) {
+      age--;
+    }
+    
+    return age;
+  };
+
+  // Mise à jour de l'âge quand la date change
+  useEffect(() => {
+    const age = calculerAge(dateNaissance.jour, dateNaissance.mois, dateNaissance.annee);
+    if (age !== undefined) {
+      handleUpdateDonnees({ age });
+    }
+  }, [dateNaissance]);
+
   // Calcul automatique de l'IMC
   useEffect(() => {
     if (donnees.taille && donnees.poids) {
@@ -64,31 +100,27 @@ const EtapeDonneesPhysiques: React.FC<EtapeDonneesPhysiquesProps> = ({
   const niveauxActivite = [
     {
       value: NiveauActivite.SEDENTAIRE,
-      icon: '🪑',
-      description: 'Peu ou pas d\'exercice'
+      description: 'Très peu d\'activité physique'
     },
     {
       value: NiveauActivite.LEGEREMENT_ACTIF,
-      icon: '🚶',
-      description: 'Exercice léger 1-3 fois/semaine'
+      description: 'Je marche un peu, bouge parfois'
     },
     {
       value: NiveauActivite.MODEREMENT_ACTIF,
-      icon: '🏃',
-      description: 'Exercice modéré 3-5 fois/semaine'
+      description: 'Je fais un peu de sport chaque semaine'
     },
     {
       value: NiveauActivite.TRES_ACTIF,
-      icon: '💪',
-      description: 'Exercice intense 6-7 fois/semaine'
+      description: 'Sport régulier, mode de vie dynamique'
     },
     {
       value: NiveauActivite.TRAVAIL_PHYSIQUE,
-      icon: '🏗️',
-      description: 'Travail physique + exercice'
+      description: 'Travail physique / sportif intense'
     }
   ];
 
+  // Fonction pour obtenir la couleur selon la catégorie IMC
   const getCategorieIMCColor = (imc?: number) => {
     if (!imc) return '#636e72';
     if (imc < 18.5) return '#e74c3c';
@@ -97,6 +129,7 @@ const EtapeDonneesPhysiques: React.FC<EtapeDonneesPhysiquesProps> = ({
     return '#e74c3c';
   };
 
+  // Fonction pour obtenir le texte de catégorie IMC
   const getCategorieIMCText = (imc?: number) => {
     if (!imc) return '';
     if (imc < 18.5) return 'Maigreur';
@@ -106,324 +139,448 @@ const EtapeDonneesPhysiques: React.FC<EtapeDonneesPhysiquesProps> = ({
   };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Parlons un peu de toi</Text>
-        <Text style={styles.subtitle}>
-          Ces informations nous aident à personnaliser tes recommandations
-        </Text>
-      </View>
-
-      {/* Sexe */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Sexe</Text>
-        <View style={styles.buttonRow}>
-          <TouchableOpacity
-            style={[
-              styles.genderButton,
-              donnees.sexe === 'masculin' && styles.genderButtonSelected
-            ]}
-            onPress={() => handleSelectSexe('masculin')}
-          >
-            <Text style={styles.genderIcon}>👨</Text>
-            <Text style={[
-              styles.genderText,
-              donnees.sexe === 'masculin' && styles.genderTextSelected
-            ]}>
-              Masculin
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[
-              styles.genderButton,
-              donnees.sexe === 'feminin' && styles.genderButtonSelected
-            ]}
-            onPress={() => handleSelectSexe('feminin')}
-          >
-            <Text style={styles.genderIcon}>👩</Text>
-            <Text style={[
-              styles.genderText,
-              donnees.sexe === 'feminin' && styles.genderTextSelected
-            ]}>
-              Féminin
-            </Text>
-          </TouchableOpacity>
+    <View style={styles.wrapper}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        
+        {/* En-tête */}
+        <View style={styles.header}>
+          <Text style={styles.title}>Apprenons à te connaître un peu mieux</Text>
         </View>
-      </View>
 
-      {/* Âge */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Âge</Text>
-        <TextInput
-          style={styles.numberInput}
-          placeholder="Ex: 25"
-          value={donnees.age ? donnees.age.toString() : ''}
-          onChangeText={(value) => handleNumberInput('age', value)}
-          keyboardType="numeric"
-          maxLength={3}
-        />
-      </View>
+        {/* Sexe avec symboles masculin/féminin */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Quel est ton <Text style={styles.bold}>sexe</Text> ?</Text>
+          <View style={styles.genderContainer}>
+            <TouchableOpacity
+              style={[
+                styles.genderOption,
+                donnees.sexe === 'masculin' && styles.genderOptionSelected
+              ]}
+              onPress={() => handleSelectSexe('masculin')}
+            >
+              <View style={[
+                styles.genderSymbolContainer,
+                donnees.sexe === 'masculin' && styles.genderSymbolContainerSelected
+              ]}>
+                <Text style={[
+                  styles.genderSymbol,
+                  donnees.sexe === 'masculin' && styles.genderSymbolSelected
+                ]}>♂</Text>
+              </View>
+              <Text style={[
+                styles.genderOptionText,
+                donnees.sexe === 'masculin' && styles.genderOptionTextSelected
+              ]}>
+                Homme
+              </Text>
+            </TouchableOpacity>
 
-      {/* Taille et Poids */}
-      <View style={styles.section}>
-        <View style={styles.measurementRow}>
-          <View style={styles.measurementItem}>
-            <Text style={styles.sectionTitle}>Taille (cm)</Text>
+            <TouchableOpacity
+              style={[
+                styles.genderOption,
+                donnees.sexe === 'feminin' && styles.genderOptionSelected
+              ]}
+              onPress={() => handleSelectSexe('feminin')}
+            >
+              <View style={[
+                styles.genderSymbolContainer,
+                donnees.sexe === 'feminin' && styles.genderSymbolContainerSelected
+              ]}>
+                <Text style={[
+                  styles.genderSymbol,
+                  donnees.sexe === 'feminin' && styles.genderSymbolSelected
+                ]}>♀</Text>
+              </View>
+              <Text style={[
+                styles.genderOptionText,
+                donnees.sexe === 'feminin' && styles.genderOptionTextSelected
+              ]}>
+                Femme
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={styles.divider} />
+
+        {/* Date de naissance */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Quel est ta <Text style={styles.bold}>date de naissance</Text> ?</Text>
+          <View style={styles.dateInputContainer}>
             <TextInput
-              style={styles.numberInput}
-              placeholder="Ex: 170"
+              style={styles.dateInput}
+              placeholder="JJ"
+              placeholderTextColor="#A0A0A0"
+              value={dateNaissance.jour}
+              onChangeText={(text) => setDateNaissance({...dateNaissance, jour: text})}
+              maxLength={2}
+              keyboardType="numeric"
+            />
+            <Text style={styles.dateSeparator}>/</Text>
+            <TextInput
+              style={styles.dateInput}
+              placeholder="MM"
+              placeholderTextColor="#A0A0A0"
+              value={dateNaissance.mois}
+              onChangeText={(text) => setDateNaissance({...dateNaissance, mois: text})}
+              maxLength={2}
+              keyboardType="numeric"
+            />
+            <Text style={styles.dateSeparator}>/</Text>
+            <TextInput
+              style={styles.dateInput}
+              placeholder="AAAA"
+              placeholderTextColor="#A0A0A0"
+              value={dateNaissance.annee}
+              onChangeText={(text) => setDateNaissance({...dateNaissance, annee: text})}
+              maxLength={4}
+              keyboardType="numeric"
+            />
+          </View>
+          {donnees.age && (
+            <Text style={styles.ageText}>Âge: {donnees.age} ans</Text>
+          )}
+        </View>
+
+        <View style={styles.divider} />
+
+        {/* Taille */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Quelle est ta taille ?</Text>
+          <View style={styles.measurementContainer}>
+            <View style={styles.unitSelector}>
+              <Text style={styles.unitText}>Kg.cm</Text>
+              <Text style={[styles.unitText, styles.unitInactive]}>Lb, ft</Text>
+            </View>
+            <TextInput
+              style={styles.largeInput}
+              placeholder="170"
+              placeholderTextColor="#A0A0A0"
               value={donnees.taille ? donnees.taille.toString() : ''}
               onChangeText={(value) => handleNumberInput('taille', value)}
               keyboardType="numeric"
               maxLength={3}
             />
-          </View>
-
-          <View style={styles.measurementItem}>
-            <Text style={styles.sectionTitle}>Poids (kg)</Text>
-            <TextInput
-              style={styles.numberInput}
-              placeholder="Ex: 70"
-              value={donnees.poids ? donnees.poids.toString() : ''}
-              onChangeText={(value) => handleNumberInput('poids', value)}
-              keyboardType="numeric"
-              maxLength={4}
-            />
+            <Text style={styles.unitLabel}>cm</Text>
           </View>
         </View>
 
-        {/* IMC calculé */}
+        <View style={styles.divider} />
+
+        {/* Poids actuel */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Quelle est ton poids actuel ?</Text>
+          <View style={styles.weightContainer}>
+            <TextInput
+              style={styles.weightInput}
+              placeholder="0"
+              placeholderTextColor="#A0A0A0"
+              value={donnees.poids ? donnees.poids.toString() : ''}
+              onChangeText={(value) => handleNumberInput('poids', value)}
+              keyboardType="numeric"
+              maxLength={3}
+            />
+            <View style={styles.weightUnit}>
+              <Text style={styles.weightUnitText}>Kg</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* Affichage de l'IMC */}
         {donnees.imc && (
           <View style={styles.imcContainer}>
-            <Text style={styles.imcLabel}>IMC calculé:</Text>
+            <Text style={styles.imcTitle}>Votre IMC: </Text>
             <Text style={[styles.imcValue, { color: getCategorieIMCColor(donnees.imc) }]}>
-              {donnees.imc} - {getCategorieIMCText(donnees.imc)}
+              {donnees.imc.toFixed(1)} ({getCategorieIMCText(donnees.imc)})
             </Text>
           </View>
         )}
-      </View>
 
-      {/* Tour de taille (optionnel) */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Tour de taille (cm) - Optionnel</Text>
-        <TextInput
-          style={styles.numberInput}
-          placeholder="Ex: 85"
-          value={donnees.tourTaille ? donnees.tourTaille.toString() : ''}
-          onChangeText={(value) => handleNumberInput('tourTaille', value)}
-          keyboardType="numeric"
-          maxLength={3}
-        />
-      </View>
+        <View style={styles.divider} />
 
-      {/* Niveau d'activité */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Niveau d'activité physique</Text>
-        <Text style={styles.sectionSubtitle}>
-          Sélectionne le niveau qui correspond le mieux à ton mode de vie
-        </Text>
-        
-        {niveauxActivite.map((niveau) => {
-          const isSelected = donnees.niveauActivite === niveau.value;
+        {/* Niveau d'activité */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Quel est ton niveau d'activité au quotidien ?</Text>
           
-          return (
-            <TouchableOpacity
-              key={niveau.value}
-              style={[
-                styles.activityCard,
-                isSelected && styles.activityCardSelected
-              ]}
-              onPress={() => handleSelectNiveauActivite(niveau.value)}
-            >
-              <View style={styles.activityContent}>
-                <Text style={styles.activityIcon}>{niveau.icon}</Text>
-                <View style={styles.activityTextContainer}>
-                  <Text style={[
-                    styles.activityTitle,
-                    isSelected && styles.activityTitleSelected
-                  ]}>
-                    {LABELS.niveauxActivite[niveau.value]}
-                  </Text>
-                  <Text style={styles.activityDescription}>
-                    {niveau.description}
-                  </Text>
-                </View>
+          {niveauxActivite.map((niveau) => {
+            const isSelected = donnees.niveauActivite === niveau.value;
+            
+            return (
+              <TouchableOpacity
+                key={niveau.value}
+                style={[
+                  styles.activityOption,
+                  isSelected && styles.activityOptionSelected
+                ]}
+                onPress={() => handleSelectNiveauActivite(niveau.value)}
+              >
+                <Text style={[
+                  styles.activityOptionText,
+                  isSelected && styles.activityOptionTextSelected
+                ]}>
+                  {niveau.description}
+                </Text>
                 {isSelected && (
-                  <View style={styles.checkContainer}>
-                    <Text style={styles.checkIcon}>✓</Text>
+                  <View style={styles.checkmark}>
+                    <Text style={styles.checkmarkText}>✓</Text>
                   </View>
                 )}
-              </View>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
 
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>Tes données personnelles sont sécurisées et ne seront jamais partagées</Text>
-      </View>
-    </ScrollView>
+        {/* Bouton CONTINUER */}
+        <TouchableOpacity 
+          style={[styles.continueButton, !canContinue && styles.continueButtonDisabled]}
+          onPress={onNext}
+          disabled={!canContinue}
+        >
+          <Text style={styles.continueButtonText}>CONTINUER</Text>
+        </TouchableOpacity>
+
+      </ScrollView>
+    </View>
   );
 };
-
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
   container: {
     flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 30,
   },
   header: {
     marginBottom: 30,
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#2d3436',
+    color: '#2C3E50',
     textAlign: 'center',
     marginBottom: 10,
+    fontWeight: '400',
   },
-  subtitle: {
-    fontSize: 16,
-    color: '#636e72',
-    textAlign: 'center',
-    lineHeight: 22,
+  bold: {
+    fontWeight: '700',
   },
   section: {
-    marginBottom: 20,
+    marginBottom: 25,
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#2d3436',
+    color: '#2C3E50',
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+ genderContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 20,
+  },
+  genderOption: {
+    alignItems: 'center',
+    padding: 15,
+    borderRadius: 15,
+    backgroundColor: '#F8F8F8',
+    borderWidth: 2,
+    borderColor: '#E8E8E8',
+    width: 120,
+  },
+  genderOptionSelected: {
+    borderColor: '#B2EE1B',
+    backgroundColor: '#F8FFE0',
+  },
+  genderSymbolContainer: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#E8E8E8',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 10,
   },
-  sectionSubtitle: {
-    fontSize: 14,
-    color: '#636e72',
-    marginBottom: 15,
+  genderSymbolContainerSelected: {
+    backgroundColor: '#B2EE1B',
   },
-  buttonRow: {
-    flexDirection: 'row',
-    gap: 12,
+  genderSymbol: {
+    fontSize: 24,
+    color: '#666666',
   },
-  genderButton: {
-    flex: 1,
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 16,
-    alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#e9ecef',
+  genderSymbolSelected: {
+    color: '#FFFFFF',
   },
-  genderButtonSelected: {
-    borderColor: colors.brandLime,
-    backgroundColor: '#f8fffd',
-  },
-  genderIcon: {
-    fontSize: 32,
-    marginBottom: 8,
-  },
-  genderText: {
+  genderOptionText: {
     fontSize: 16,
+    color: '#666666',
     fontWeight: '500',
-    color: '#636e72',
   },
-  genderTextSelected: {
-    color: colors.brandLime,
+  genderOptionTextSelected: {
+    color: '#2C3E50',
     fontWeight: '600',
   },
-  numberInput: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 16,
-    fontSize: 16,
+  divider: {
+    height: 1,
+    backgroundColor: '#EEEEEE',
+    marginVertical: 20,
+  },
+  dateInputContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 10,
+  },
+  dateInput: {
+    width: 60,
+    height: 50,
     borderWidth: 1,
-    borderColor: '#e9ecef',
+    borderColor: '#E0E0E0',
+    borderRadius: 10,
+    textAlign: 'center',
+    fontSize: 16,
+    color: '#2C3E50',
   },
-  measurementRow: {
-    flexDirection: 'row',
-    gap: 12,
+  dateSeparator: {
+    fontSize: 18,
+    color: '#2C3E50',
+    fontWeight: 'bold',
   },
-  measurementItem: {
-    flex: 1,
-  },
-  imcContainer: {
-    backgroundColor: '#f8f9fa',
-    borderRadius: 8,
-    padding: 12,
+  ageText: {
+    textAlign: 'center',
     marginTop: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    color: '#666666',
+    fontSize: 14,
+  },
+  measurementContainer: {
     alignItems: 'center',
   },
-  imcLabel: {
+  unitSelector: {
+    flexDirection: 'row',
+    gap: 20,
+    marginBottom: 15,
+  },
+  unitText: {
     fontSize: 14,
-    color: '#636e72',
+    color: '#B2EE1B',
+    fontWeight: '600',
+  },
+  unitInactive: {
+    color: '#CCCCCC',
+  },
+  largeInput: {
+    width: 120,
+    height: 60,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    borderRadius: 15,
+    textAlign: 'center',
+    fontSize: 24,
+    color: '#2C3E50',
+    fontWeight: '500',
+    marginBottom: 10,
+  },
+  unitLabel: {
+    fontSize: 14,
+    color: '#666666',
+  },
+  weightContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 10,
+  },
+  weightInput: {
+    width: 80,
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    borderRadius: 10,
+    textAlign: 'center',
+    fontSize: 18,
+    color: '#2C3E50',
+    fontWeight: '500',
+  },
+  weightUnit: {
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    backgroundColor: '#B2EE1B',
+    borderRadius: 15,
+  },
+  weightUnitText: {
+    fontSize: 14,
+    color: '#2C3E50',
+    fontWeight: '600',
+  },
+  imcContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 15,
+    marginBottom: 10,
+  },
+  imcTitle: {
+    fontSize: 16,
+    color: '#2C3E50',
+    fontWeight: '500',
   },
   imcValue: {
     fontSize: 16,
     fontWeight: '600',
   },
-  activityCard: {
-    backgroundColor: '#fff',
+  activityOption: {
+    padding: 18,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
     borderRadius: 12,
     marginBottom: 10,
-    borderWidth: 1,
-    borderColor: '#e9ecef',
-  },
-  activityCardSelected: {
-    borderColor: colors.brandLime,
-    backgroundColor: '#f8fffd',
-  },
-  activityContent: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 16,
   },
-  activityIcon: {
-    fontSize: 24,
-    marginRight: 15,
+  activityOptionSelected: {
+    borderColor: '#B2EE1B',
+    backgroundColor: '#F8FFE0',
   },
-  activityTextContainer: {
+  activityOptionText: {
+    fontSize: 16,
+    color: '#666666',
     flex: 1,
   },
-  activityTitle: {
-    fontSize: 16,
+  activityOptionTextSelected: {
+    color: '#2C3E50',
     fontWeight: '500',
-    color: '#2d3436',
-    marginBottom: 2,
   },
-  activityTitleSelected: {
-    color: colors.brandLime,
-    fontWeight: '600',
-  },
-  activityDescription: {
-    fontSize: 13,
-    color: '#636e72',
-  },
-  checkContainer: {
+  checkmark: {
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: colors.brandLime,
+    backgroundColor: '#B2EE1B',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  checkIcon: {
-    color: '#fff',
-    fontSize: 14,
+  checkmarkText: {
+    color: '#FFFFFF',
     fontWeight: 'bold',
-  },
-  footer: {
-    marginTop: 20,
-    paddingTop: 20,
-    borderTopWidth: 1,
-    borderTopColor: '#e9ecef',
-  },
-  footerText: {
     fontSize: 14,
-    color: '#636e72',
-    textAlign: 'center',
-    fontStyle: 'italic',
+  },
+  continueButton: {
+    backgroundColor: '#B2EE1B',
+    paddingVertical: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginVertical: 30,
+    marginHorizontal: 20,
+  },
+  continueButtonDisabled: {
+    backgroundColor: '#CCCCCC',
+  },
+  continueButtonText: {
+    color: '#2C3E50',
+    fontSize: 18,
+    fontWeight: '600',
+    letterSpacing: 0.5,
   },
 });
 

@@ -73,92 +73,30 @@ function App() {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       
-      <View style={styles.header}>
-        <Text style={styles.appTitle}>nutril'way</Text>
-        <Text style={styles.appSubtitle}>Ton compagnon mieux-être & nutrition</Text>
-      </View>
-
-      <View style={styles.content}>
-        {!userProfile ? (
-          <View style={styles.welcomeSection}>
-            <Text style={styles.welcomeTitle}>Bienvenue sur nutril'way</Text>
-            <Text style={styles.welcomeText}>
-              Crée ton profil pour recevoir un accompagnement simple, sans blabla, adapté à tes objectifs.
-            </Text>
-            
-            <TouchableOpacity 
-              style={styles.startButton}
-              onPress={handleStartProfiling}
-            >
-              <Text style={styles.startButtonText}>Commencer</Text>
-            </TouchableOpacity>
-
-            <View style={styles.featuresSection}>
-              <Text style={styles.featuresTitle}>Ce que tu vas obtenir :</Text>
-              
-              <View style={styles.feature}>
-                <Text style={styles.featureText}>Un profil nutrition personnalisé</Text>
-              </View>
-              
-              <View style={styles.feature}>
-                <Text style={styles.featureText}>Des recommandations claires</Text>
-              </View>
-              
-              <View style={styles.feature}>
-                <Text style={styles.featureText}>Un suivi simple au quotidien</Text>
-              </View>
-            </View>
-          </View>
-        ) : (
-          <View style={styles.profileSection}>
-            <Text style={styles.profileTitle}>
-              Ton profil est configuré !
-            </Text>
-            
-            <View style={styles.profileSummary}>
-              <Text style={styles.profileSummaryTitle}>NutriType: {userProfile.nutriType}</Text>
-              <Text style={styles.profileSummaryText}>
-                Objectif: {userProfile.objectif}
-              </Text>
-              <Text style={styles.profileSummaryText}>
-                IMC: {userProfile.donneesPhysiques.imc} ({userProfile.donneesPhysiques.categorieIMC})
-              </Text>
-              <Text style={styles.profileSummaryText}>
-                Activités: {userProfile.activitesSportives.activites.length} sélectionnées
-              </Text>
-            </View>
-
-            <View style={styles.actionsSection}>
-              <TouchableOpacity 
-                style={styles.actionButton}
-                onPress={handleViewProfile}
-              >
-                <Text style={styles.actionButtonText}>Voir mon profil</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity 
-                style={[styles.actionButton, styles.secondaryActionButton]}
-                onPress={() => setShowProfiling(true)}
-              >
-                <Text style={[styles.actionButtonText, styles.secondaryActionButtonText]}>Modifier mon profil</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.nextStepsSection}>
-              <Text style={styles.nextStepsTitle}>Prochaines fonctionnalités</Text>
-              <Text style={styles.nextStepsText}>
-                • Recommandations nutritionnelles personnalisées{'\n'}
-                • Plans d'entraînement adaptés{'\n'}
-                • Suivi quotidien intelligent{'\n'}
-                • Coaching IA en temps réel
-              </Text>
-            </View>
-          </View>
-        )}
-      </View>
-
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>Conçu pour une nutrition personnalisée</Text>
+      {/* Formes géométriques en arrière-plan */}
+      <View style={[styles.shape, styles.circle, { top: '15%', left: '10%' }]} />
+      <View style={[styles.shape, styles.triangle, { top: '25%', right: '15%' }]} />
+      <View style={[styles.shape, styles.circle, { bottom: '20%', right: '10%' }]} />
+      <View style={[styles.shape, styles.square, { bottom: '30%', left: '15%' }]} />
+      
+      <View style={styles.overlay}>
+        <View style={styles.content}>
+          <Text style={styles.title}>Welcome to a more</Text>
+          <Text style={styles.titleBold}>healthy lifestyle</Text>
+          
+          <Text style={styles.subtitle}>
+            We're here to learn more about your dietary needs
+            and preferences so we can provide you with
+            personalized information and tips.
+          </Text>
+          
+          <TouchableOpacity 
+            style={styles.button}
+            onPress={handleStartProfiling}
+          >
+            <Text style={styles.buttonText}>GET STARTED</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -167,173 +105,86 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: '#f0f7e6',
   },
-  header: {
-    backgroundColor: colors.brandBlack,
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    alignItems: 'center',
-    borderBottomWidth: 0,
-  },
-  appTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: colors.brandLime,
-    marginBottom: 5,
-  },
-  appSubtitle: {
-    fontSize: 16,
-    color: colors.textOnBlack,
-  },
-  content: {
-    flex: 1,
-    padding: 20,
-  },
-  welcomeSection: {
+  overlay: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 20,
   },
-  welcomeTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: colors.textOnBlack,
-    textAlign: 'center',
-    marginBottom: 15,
+  content: {
+    alignItems: 'center',
+    maxWidth: 350,
   },
-  welcomeText: {
-    fontSize: 16,
-    color: colors.textOnBlack,
+  title: {
+    fontSize: 32,
+    color: '#2C3E50',
     textAlign: 'center',
-    lineHeight: 24,
+    marginBottom: 5,
+    fontWeight: '300',
+  },
+  titleBold: {
+    fontSize: 32,
+    color: '#2C3E50',
+    textAlign: 'center',
     marginBottom: 30,
-    paddingHorizontal: 20,
+    fontWeight: '700',
   },
-  startButton: {
-    backgroundColor: colors.brandLime,
-    borderRadius: 12,
-    paddingHorizontal: 30,
+  subtitle: {
+    fontSize: 18,
+    color: '#2C3E50',
+    textAlign: 'center',
+    lineHeight: 26,
+    marginBottom: 40,
+    fontWeight: '300',
+  },
+  button: {
+    backgroundColor: '#000000ff',
+    paddingHorizontal: 40,
     paddingVertical: 15,
+    borderRadius: 12,
     elevation: 3,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-    marginBottom: 40,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.5,
   },
-  startButtonText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: colors.textOnLime,
-  },
-  featuresSection: {
-    width: '100%',
-    maxWidth: 300,
-  },
-  featuresTitle: {
+  buttonText: {
+    color: '#B2EE1B',
     fontSize: 18,
     fontWeight: '600',
-    color: colors.brandLime,
-    marginBottom: 15,
-    textAlign: 'center',
+    letterSpacing: 0.5,
   },
-  feature: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-    paddingHorizontal: 10,
+  // Styles pour les formes géométriques
+  shape: {
+    position: 'absolute',
+    opacity: 0.2,
   },
-  featureText: {
-    fontSize: 14,
-    color: colors.textOnBlack,
-    flex: 1,
-    lineHeight: 18,
+  circle: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: '#B2EE1B',
   },
-  profileSection: {
-    flex: 1,
-    alignItems: 'center',
-    paddingTop: 50,
-  },
-  profileTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: colors.textOnBlack,
-    textAlign: 'center',
-    marginBottom: 30,
-  },
-  profileSummary: {
-    backgroundColor: colors.surface,
-    borderRadius: 12,
-    padding: 20,
-    marginBottom: 30,
-    width: '100%',
-    elevation: 2,
-  },
-  profileSummaryTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: colors.textPrimary,
-    marginBottom: 10,
-  },
-  profileSummaryText: {
-    fontSize: 16,
-    color: '#4A5160',
-    marginBottom: 5,
-  },
-  actionsSection: {
-    width: '100%',
-    marginBottom: 30,
-  },
-  actionButton: {
-    backgroundColor: colors.brandLime,
-    borderRadius: 12,
-    padding: 15,
-    alignItems: 'center',
-    marginBottom: 12,
-    elevation: 2,
-  },
-  secondaryActionButton: {
+  triangle: {
+    width: 0,
+    height: 0,
     backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: colors.brandLime,
+    borderStyle: 'solid',
+    borderLeftWidth: 50,
+    borderRightWidth: 50,
+    borderBottomWidth: 100,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderBottomColor: '#B2EE1B',
+    transform: [{ rotate: '180deg' }],
   },
-  actionButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: colors.textOnLime,
-  },
-  secondaryActionButtonText: {
-    color: colors.brandLime,
-  },
-  nextStepsSection: {
-    backgroundColor: colors.surface,
-    borderRadius: 12,
-    padding: 20,
-    width: '100%',
-    borderLeftWidth: 0,
-  },
-  nextStepsTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: colors.textPrimary,
-    marginBottom: 10,
-  },
-  nextStepsText: {
-    fontSize: 14,
-    color: '#4A5160',
-    lineHeight: 20,
-  },
-  footer: {
-    padding: 20,
-    alignItems: 'center',
-    borderTopWidth: 0,
-    backgroundColor: colors.brandBlack,
-  },
-  footerText: {
-    fontSize: 14,
-    color: colors.textOnBlack,
-    fontStyle: 'italic',
+  square: {
+    width: 80,
+    height: 80,
+    backgroundColor: '#B2EE1B',
+    transform: [{ rotate: '45deg' }],
   },
 });
 

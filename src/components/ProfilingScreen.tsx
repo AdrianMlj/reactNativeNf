@@ -219,8 +219,8 @@ const ProfilingScreen: React.FC<ProfilingScreenProps> = ({ onComplete }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>📋 PROFILAGE COMPLET</Text>
-        <Text style={styles.subtitle}>NUTRIBOT – NUTR'ILEFIT</Text>
+        <Text style={styles.title}>PROFILAGE COMPLET</Text>
+        <Text style={styles.subtitle}>NUTRIBOT – NUTRIL'WAY</Text>
         {navigation.etapeActuelle !== EtapeProfilage.RESULTATS && renderBarreProgression()}
       </View>
 
@@ -267,7 +267,7 @@ const ProfilingScreen: React.FC<ProfilingScreenProps> = ({ onComplete }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0E0F10',
+    backgroundColor: '#fbfbfbff',
   },
   header: {
     backgroundColor: colors.brandBlack,

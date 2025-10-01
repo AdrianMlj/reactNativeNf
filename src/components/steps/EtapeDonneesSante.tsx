@@ -50,243 +50,403 @@ const EtapeDonneesSante: React.FC<EtapeDonneesSanteProps> = ({
     onUpdate({ donneesSante });
   };
 
+  // Options dans l'ordre exact de l'image avec ajout d'Hypotension
   const situationsSanteOptions = [
-    { value: SituationSante.DIABETE, icon: '🩺', color: '#e74c3c' },
-    { value: SituationSante.HYPERTENSION, icon: '❤️', color: '#e74c3c' },
-    { value: SituationSante.CHOLESTEROL, icon: '🧪', color: '#f39c12' },
-    { value: SituationSante.TROUBLES_DIGESTIFS, icon: '🤢', color: '#e67e22' },
-    { value: SituationSante.STRESS_ANXIETE, icon: '😰', color: '#9b59b6' },
-    { value: SituationSante.FATIGUE_CHRONIQUE, icon: '😴', color: '#34495e' },
-    { value: SituationSante.TROUBLES_SOMMEIL, icon: '🌙', color: '#2c3e50' },
-    { value: SituationSante.DEPRESSION_LEGERE, icon: '😔', color: '#7f8c8d' },
-    { value: SituationSante.TROUBLES_MENSTRUELS, icon: '🩸', color: '#e91e63' },
-    { value: SituationSante.AUCUN, icon: '✅', color: '#27ae60' }
+    { value: SituationSante.TROUBLES_DIGESTIFS, label: 'Troubles digestifs' },
+    { value: SituationSante.DIABETE, label: 'Diabète' },
+    { value: SituationSante.CHOLESTEROL, label: 'Cholestérol élevé' },
+    { value: SituationSante.STRESS_ANXIETE, label: 'Stress / Anxiété' },
+    { value: SituationSante.HYPERTENSION, label: 'Hypertension' },
+    { value: SituationSante.HYPOTENSION, label: 'Hypotension' },
+    { value: SituationSante.FATIGUE_CHRONIQUE, label: 'Fatigue chronique' },
+    { value: SituationSante.DEPRESSION_LEGERE, label: 'Dépression légère' },
+    { value: SituationSante.TROUBLES_MENSTRUELS, label: 'Troubles menstruels' },
+    { value: SituationSante.AUTRES, label: 'Autres' },
+    { value: SituationSante.AUCUN, label: 'Aucun problème particulier' }
   ];
 
-  const getNombreSituationsText = () => {
-    const situationsReelles = situations.filter(s => s !== SituationSante.AUCUN);
-    const nombre = situationsReelles.length;
-    
-    if (nombre === 0) return 'Aucune situation sélectionnée';
-    if (nombre === 1) return '1 situation sélectionnée';
-    return `${nombre} situations sélectionnées`;
-  };
-
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.header}>
-        <Text style={styles.title}>🏥 As-tu des situations à prendre en compte ?</Text>
-        <Text style={styles.subtitle}>
-          Sélectionne toutes les situations qui te concernent (choix multiples possibles)
-        </Text>
-        <View style={styles.counterContainer}>
-          <Text style={styles.counterText}>{getNombreSituationsText()}</Text>
+    <View style={styles.wrapper}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        
+        {/* En-tête */}
+        <View style={styles.header}>
+          <Text style={styles.title}>
+            Y a-t-il des situations de santé que tu aimerais qu'on prenne en compte ?
+          </Text>
         </View>
-      </View>
 
-      <View style={styles.optionsContainer}>
-        {situationsSanteOptions.map((option) => {
-          const isSelected = situations.includes(option.value);
-          const isAucun = option.value === SituationSante.AUCUN;
-          
-          return (
+        {/* Options de santé - Disposition exacte comme l'image */}
+        <View style={styles.optionsContainer}>
+          {/* Première ligne */}
+          <View style={styles.optionsRow}>
             <TouchableOpacity
-              key={option.value}
               style={[
-                styles.optionCard,
-                isSelected && styles.optionCardSelected,
-                isAucun && styles.optionCardAucun,
-                isAucun && isSelected && styles.optionCardAucunSelected
+                styles.optionButton,
+                situations.includes(SituationSante.TROUBLES_DIGESTIFS) && styles.optionButtonSelected
               ]}
-              onPress={() => handleToggleSituation(option.value)}
-              activeOpacity={0.7}
+              onPress={() => handleToggleSituation(SituationSante.TROUBLES_DIGESTIFS)}
             >
               <View style={styles.optionContent}>
-                <View style={[
-                  styles.iconContainer, 
-                  { backgroundColor: option.color + '20' }
+                {situations.includes(SituationSante.TROUBLES_DIGESTIFS) && (
+                  <View style={styles.checkmarkContainer}>
+                    <Text style={styles.checkmark}>✓</Text>
+                  </View>
+                )}
+                <Text style={[
+                  styles.optionButtonText,
+                  situations.includes(SituationSante.TROUBLES_DIGESTIFS) && styles.optionButtonTextSelected
                 ]}>
-                  <Text style={styles.optionIcon}>{option.icon}</Text>
-                </View>
-                
-                <View style={styles.optionTextContainer}>
-                  <Text style={[
-                    styles.optionText,
-                    isSelected && styles.optionTextSelected,
-                    isAucun && styles.optionTextAucun
-                  ]}>
-                    {LABELS.situationsSante[option.value]}
-                  </Text>
-                </View>
-                
-                <View style={[
-                  styles.checkbox,
-                  isSelected && styles.checkboxSelected
-                ]}>
-                  {isSelected && <Text style={styles.checkIcon}>✓</Text>}
-                </View>
+                  Troubles digestifs
+                </Text>
               </View>
             </TouchableOpacity>
-          );
-        })}
-      </View>
 
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoTitle}>ℹ️ Pourquoi ces informations ?</Text>
-        <Text style={styles.infoText}>
-          Ces données nous permettent de personnaliser tes recommandations nutritionnelles 
-          et d'adapter ton programme selon tes besoins de santé spécifiques.
-        </Text>
-      </View>
+            <TouchableOpacity
+              style={[
+                styles.optionButton,
+                situations.includes(SituationSante.DIABETE) && styles.optionButtonSelected
+              ]}
+              onPress={() => handleToggleSituation(SituationSante.DIABETE)}
+            >
+              <View style={styles.optionContent}>
+                {situations.includes(SituationSante.DIABETE) && (
+                  <View style={styles.checkmarkContainer}>
+                    <Text style={styles.checkmark}>✓</Text>
+                  </View>
+                )}
+                <Text style={[
+                  styles.optionButtonText,
+                  situations.includes(SituationSante.DIABETE) && styles.optionButtonTextSelected
+                ]}>
+                  Diabète
+                </Text>
+              </View>
+            </TouchableOpacity>
 
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          🔒 Ces informations restent strictement confidentielles
-        </Text>
-      </View>
-    </ScrollView>
+            <TouchableOpacity
+              style={[
+                styles.optionButton,
+                situations.includes(SituationSante.CHOLESTEROL) && styles.optionButtonSelected
+              ]}
+              onPress={() => handleToggleSituation(SituationSante.CHOLESTEROL)}
+            >
+              <View style={styles.optionContent}>
+                {situations.includes(SituationSante.CHOLESTEROL) && (
+                  <View style={styles.checkmarkContainer}>
+                    <Text style={styles.checkmark}>✓</Text>
+                  </View>
+                )}
+                <Text style={[
+                  styles.optionButtonText,
+                  situations.includes(SituationSante.CHOLESTEROL) && styles.optionButtonTextSelected
+                ]}>
+                  Cholestérol élevé
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          {/* Deuxième ligne */}
+          <View style={styles.optionsRow}>
+            <TouchableOpacity
+              style={[
+                styles.optionButton,
+                situations.includes(SituationSante.STRESS_ANXIETE) && styles.optionButtonSelected
+              ]}
+              onPress={() => handleToggleSituation(SituationSante.STRESS_ANXIETE)}
+            >
+              <View style={styles.optionContent}>
+                {situations.includes(SituationSante.STRESS_ANXIETE) && (
+                  <View style={styles.checkmarkContainer}>
+                    <Text style={styles.checkmark}>✓</Text>
+                  </View>
+                )}
+                <Text style={[
+                  styles.optionButtonText,
+                  situations.includes(SituationSante.STRESS_ANXIETE) && styles.optionButtonTextSelected
+                ]}>
+                  Stress / Anxiété
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.optionButton,
+                situations.includes(SituationSante.HYPERTENSION) && styles.optionButtonSelected
+              ]}
+              onPress={() => handleToggleSituation(SituationSante.HYPERTENSION)}
+            >
+              <View style={styles.optionContent}>
+                {situations.includes(SituationSante.HYPERTENSION) && (
+                  <View style={styles.checkmarkContainer}>
+                    <Text style={styles.checkmark}>✓</Text>
+                  </View>
+                )}
+                <Text style={[
+                  styles.optionButtonText,
+                  situations.includes(SituationSante.HYPERTENSION) && styles.optionButtonTextSelected
+                ]}>
+                  Hypertension
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.optionButton,
+                situations.includes(SituationSante.HYPOTENSION) && styles.optionButtonSelected
+              ]}
+              onPress={() => handleToggleSituation(SituationSante.HYPOTENSION)}
+            >
+              <View style={styles.optionContent}>
+                {situations.includes(SituationSante.HYPOTENSION) && (
+                  <View style={styles.checkmarkContainer}>
+                    <Text style={styles.checkmark}>✓</Text>
+                  </View>
+                )}
+                <Text style={[
+                  styles.optionButtonText,
+                  situations.includes(SituationSante.HYPOTENSION) && styles.optionButtonTextSelected
+                ]}>
+                  Hypotension
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          {/* Troisième ligne */}
+          <View style={styles.optionsRow}>
+            <TouchableOpacity
+              style={[
+                styles.optionButton,
+                situations.includes(SituationSante.FATIGUE_CHRONIQUE) && styles.optionButtonSelected
+              ]}
+              onPress={() => handleToggleSituation(SituationSante.FATIGUE_CHRONIQUE)}
+            >
+              <View style={styles.optionContent}>
+                {situations.includes(SituationSante.FATIGUE_CHRONIQUE) && (
+                  <View style={styles.checkmarkContainer}>
+                    <Text style={styles.checkmark}>✓</Text>
+                  </View>
+                )}
+                <Text style={[
+                  styles.optionButtonText,
+                  situations.includes(SituationSante.FATIGUE_CHRONIQUE) && styles.optionButtonTextSelected
+                ]}>
+                  Fatigue chronique
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.optionButton,
+                situations.includes(SituationSante.DEPRESSION_LEGERE) && styles.optionButtonSelected
+              ]}
+              onPress={() => handleToggleSituation(SituationSante.DEPRESSION_LEGERE)}
+            >
+              <View style={styles.optionContent}>
+                {situations.includes(SituationSante.DEPRESSION_LEGERE) && (
+                  <View style={styles.checkmarkContainer}>
+                    <Text style={styles.checkmark}>✓</Text>
+                  </View>
+                )}
+                <Text style={[
+                  styles.optionButtonText,
+                  situations.includes(SituationSante.DEPRESSION_LEGERE) && styles.optionButtonTextSelected
+                ]}>
+                  Dépression légère
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.optionButton,
+                situations.includes(SituationSante.TROUBLES_MENSTRUELS) && styles.optionButtonSelected
+              ]}
+              onPress={() => handleToggleSituation(SituationSante.TROUBLES_MENSTRUELS)}
+            >
+              <View style={styles.optionContent}>
+                {situations.includes(SituationSante.TROUBLES_MENSTRUELS) && (
+                  <View style={styles.checkmarkContainer}>
+                    <Text style={styles.checkmark}>✓</Text>
+                  </View>
+                )}
+                <Text style={[
+                  styles.optionButtonText,
+                  situations.includes(SituationSante.TROUBLES_MENSTRUELS) && styles.optionButtonTextSelected
+                ]}>
+                  Troubles menstruels
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          {/* Quatrième ligne */}
+          <View style={styles.optionsRow}>
+            <TouchableOpacity
+              style={[
+                styles.optionButton,
+                situations.includes(SituationSante.AUTRES) && styles.optionButtonSelected
+              ]}
+              onPress={() => handleToggleSituation(SituationSante.AUTRES)}
+            >
+              <View style={styles.optionContent}>
+                {situations.includes(SituationSante.AUTRES) && (
+                  <View style={styles.checkmarkContainer}>
+                    <Text style={styles.checkmark}>✓</Text>
+                  </View>
+                )}
+                <Text style={[
+                  styles.optionButtonText,
+                  situations.includes(SituationSante.AUTRES) && styles.optionButtonTextSelected
+                ]}>
+                  Autres
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          {/* Cinquième ligne - Bouton unique centré */}
+          <View style={styles.singleOptionRow}>
+            <TouchableOpacity
+              style={[
+                styles.optionButton,
+                styles.singleOptionButton,
+                situations.includes(SituationSante.AUCUN) && styles.optionButtonSelected
+              ]}
+              onPress={() => handleToggleSituation(SituationSante.AUCUN)}
+            >
+              <View style={styles.optionContent}>
+                {situations.includes(SituationSante.AUCUN) && (
+                  <View style={styles.checkmarkContainer}>
+                    <Text style={styles.checkmark}>✓</Text>
+                  </View>
+                )}
+                <Text style={[
+                  styles.optionButtonText,
+                  situations.includes(SituationSante.AUCUN) && styles.optionButtonTextSelected
+                ]}>
+                  Aucun problème particulier
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Bouton CONTINUER */}
+        <TouchableOpacity 
+          style={[styles.continueButton, !canContinue && styles.continueButtonDisabled]}
+          onPress={onNext}
+          disabled={!canContinue}
+        >
+          <Text style={styles.continueButtonText}>CONTINUER</Text>
+        </TouchableOpacity>
+
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
   container: {
     flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 30,
   },
   header: {
     marginBottom: 30,
+    alignItems: 'center',
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#2d3436',
+    fontSize: 18,
+    color: '#2C3E50',
     textAlign: 'center',
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#636e72',
-    textAlign: 'center',
-    lineHeight: 22,
-    marginBottom: 15,
-  },
-  counterContainer: {
-    backgroundColor: '#f8f9fa',
-    borderRadius: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    alignSelf: 'center',
-  },
-  counterText: {
-    fontSize: 14,
-    color: colors.brandLime,
-    fontWeight: '600',
+    fontWeight: '400',
+    lineHeight: 24,
   },
   optionsContainer: {
-    gap: 12,
+    marginBottom: 30,
   },
-  optionCard: {
-    backgroundColor: '#fff',
+  optionsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
+  singleOptionRow: {
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  optionButton: {
+    flex: 1,
+    backgroundColor: '#F8F8F8',
     borderRadius: 12,
+    padding: 12,
     borderWidth: 1,
-    borderColor: '#e9ecef',
-    elevation: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
+    borderColor: '#E8E8E8',
+    minHeight: 60,
+    justifyContent: 'center',
+    marginHorizontal: 6,
   },
-  optionCardSelected: {
-    borderColor: colors.brandLime,
-    backgroundColor: '#f8fffd',
+  singleOptionButton: {
+    width: '100%',
+    maxWidth: 400,
   },
-  optionCardAucun: {
-    borderColor: '#27ae60',
-    marginTop: 20,
-  },
-  optionCardAucunSelected: {
-    backgroundColor: '#f0fff4',
-    borderColor: '#27ae60',
+  optionButtonSelected: {
+    backgroundColor: '#F8FFE0',
+    borderColor: '#B2EE1B',
   },
   optionContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
-  },
-  iconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
     justifyContent: 'center',
+    flexWrap: 'wrap',
+  },
+  checkmarkContainer: {
+    marginRight: 6,
+    width: 20,
     alignItems: 'center',
-    marginRight: 15,
   },
-  optionIcon: {
-    fontSize: 20,
-  },
-  optionTextContainer: {
-    flex: 1,
-  },
-  optionText: {
+  checkmark: {
+    color: '#B2EE1B',
     fontSize: 16,
-    fontWeight: '500',
-    color: '#2d3436',
-  },
-  optionTextSelected: {
-    color: colors.brandLime,
-    fontWeight: '600',
-  },
-  optionTextAucun: {
-    color: '#27ae60',
-    fontWeight: '600',
-  },
-  checkbox: {
-    width: 24,
-    height: 24,
-    borderRadius: 4,
-    borderWidth: 2,
-    borderColor: '#ddd',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  checkboxSelected: {
-    backgroundColor: colors.brandLime,
-    borderColor: colors.brandLime,
-  },
-  checkIcon: {
-    color: '#fff',
-    fontSize: 14,
     fontWeight: 'bold',
   },
-  infoContainer: {
-    backgroundColor: '#e3f2fd',
-    borderRadius: 12,
-    padding: 16,
-    marginTop: 30,
-    borderLeftWidth: 4,
-    borderLeftColor: '#2196f3',
-  },
-  infoTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1976d2',
-    marginBottom: 8,
-  },
-  infoText: {
+  optionButtonText: {
     fontSize: 14,
-    color: '#1976d2',
-    lineHeight: 20,
-  },
-  footer: {
-    marginTop: 20,
-    paddingTop: 20,
-    borderTopWidth: 1,
-    borderTopColor: '#e9ecef',
-  },
-  footerText: {
-    fontSize: 14,
-    color: '#636e72',
+    color: '#666666',
     textAlign: 'center',
-    fontStyle: 'italic',
+    fontWeight: '400',
+    flexShrink: 1,
+    flexWrap: 'wrap',
+  },
+  optionButtonTextSelected: {
+    color: '#2C3E50',
+    fontWeight: '500',
+  },
+  continueButton: {
+    backgroundColor: '#B2EE1B',
+    paddingVertical: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginVertical: 20,
+    marginHorizontal: 20,
+  },
+  continueButtonDisabled: {
+    backgroundColor: '#CCCCCC',
+  },
+  continueButtonText: {
+    color: '#2C3E50',
+    fontSize: 18,
+    fontWeight: '600',
+    letterSpacing: 0.5,
   },
 });
 

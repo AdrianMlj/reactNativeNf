@@ -178,231 +178,144 @@ const EtapeActivitesSportives: React.FC<EtapeActivitesSportivesProps> = ({
   }, {} as { [key: string]: typeof activitesOptions });
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.header}>
-        <Text style={styles.title}>🏃‍♀️ Activités sportives</Text>
-        <Text style={styles.subtitle}>
-          Quel(s) sport(s) pratiques-tu ou souhaites-tu pratiquer ?
-        </Text>
-        <View style={styles.counterContainer}>
+    <View style={styles.wrapper}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <Text style={styles.title}>Activités sportives</Text>
+          <Text style={styles.subtitle}>
+            Quel(s) sport(s) pratiques-tu ou souhaites-tu pratiquer ?
+          </Text>
           <Text style={styles.counterText}>
             {activites.length} activité{activites.length > 1 ? 's' : ''} sélectionnée{activites.length > 1 ? 's' : ''}
           </Text>
         </View>
-      </View>
 
-      {Object.entries(groupedActivites).map(([category, categoryActivites]) => (
-        <View key={category} style={styles.categorySection}>
-          <View style={styles.categoryHeader}>
-            <View style={[
-              styles.categoryIndicator,
-              { backgroundColor: getCategoryColor(category) }
-            ]} />
-            <Text style={styles.categoryTitle}>{category}</Text>
-          </View>
-
-          <View style={styles.activitesGrid}>
-            {categoryActivites.map((option) => {
-              const isSelected = activites.includes(option.value);
-              
-              return (
-                <TouchableOpacity
-                  key={option.value}
-                  style={[
-                    styles.activiteCard,
-                    isSelected && styles.activiteCardSelected,
-                    { borderColor: option.color + '40' }
-                  ]}
-                  onPress={() => handleToggleActivite(option.value)}
-                >
-                  <View style={styles.activiteContent}>
-                    <View style={[
-                      styles.iconContainer,
-                      { backgroundColor: option.color + '20' }
-                    ]}>
-                      <Text style={styles.activiteIcon}>{option.icon}</Text>
-                    </View>
-                    
-                    <Text style={[
-                      styles.activiteText,
-                      isSelected && styles.activiteTextSelected
-                    ]}>
-                      {option.label}
-                    </Text>
-                    
-                    {isSelected && (
-                      <View style={[
-                        styles.checkContainer,
-                        { backgroundColor: option.color }
-                      ]}>
-                        <Text style={styles.checkIcon}>✓</Text>
-                      </View>
-                    )}
-                  </View>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
+        <View style={styles.optionsContainer}>
+          {activitesOptions.map((option) => {
+            const isSelected = activites.includes(option.value);
+            return (
+              <TouchableOpacity
+                key={option.value}
+                style={[
+                  styles.optionButton,
+                  isSelected && styles.optionButtonSelected
+                ]}
+                onPress={() => handleToggleActivite(option.value)}
+                activeOpacity={0.8}
+              >
+                <Text style={[
+                  styles.optionButtonText,
+                  isSelected && styles.optionButtonTextSelected
+                ]}>
+                  {option.icon} {option.label}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
         </View>
-      ))}
 
-      {/* Champ "Autre activité" */}
-      {activites.includes(ActiviteSportive.AUTRE) && (
-        <View style={styles.autreSection}>
-          <Text style={styles.autreLabel}>Précise ton autre activité :</Text>
-          <TextInput
-            style={styles.autreInput}
-            placeholder="Ex: Escalade, Pilates, etc."
-            value={autreActivite}
-            onChangeText={handleAutreActiviteChange}
-            multiline
-          />
+        {activites.includes(ActiviteSportive.AUTRE) && (
+          <View style={styles.autreSection}>
+            <Text style={styles.autreLabel}>Précise ton autre activité :</Text>
+            <TextInput
+              style={styles.autreInput}
+              placeholder="Ex: Escalade, Pilates, etc."
+              value={autreActivite}
+              onChangeText={handleAutreActiviteChange}
+              multiline
+            />
+          </View>
+        )}
+
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>
+            Ces informations restent strictement confidentielles
+          </Text>
         </View>
-      )}
-
-      <View style={styles.recommendationsContainer}>
-        <Text style={styles.recommendationsTitle}>💡 Recommandations</Text>
-        <Text style={styles.recommendationsText}>
-          • Combine différents types d'activités pour un entraînement complet
-        </Text>
-        <Text style={styles.recommendationsText}>
-          • L'OMS recommande 150min d'activité modérée par semaine
-        </Text>
-        <Text style={styles.recommendationsText}>
-          • Choisis des activités que tu aimes pour rester motivé(e)
-        </Text>
-      </View>
-
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          🎯 Ces informations nous aident à personnaliser tes programmes d'entraînement
-        </Text>
-      </View>
-    </ScrollView>
+      </ScrollView>
+      {/* <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={[
+            styles.continueButton,
+            !canContinue && styles.continueButtonDisabled
+          ]}
+          onPress={onNext}
+          activeOpacity={canContinue ? 0.8 : 1}
+          disabled={!canContinue}
+        >
+          <Text style={styles.continueButtonText}>Continuer</Text>
+        </TouchableOpacity>
+      </View> */}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   container: {
     flex: 1,
+    paddingHorizontal: 24,
+    paddingTop: 40,
   },
   header: {
     alignItems: 'center',
-    marginBottom: 30,
+    marginBottom: 32,
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
-    color: '#2d3436',
+    color: '#222',
+    marginBottom: 8,
     textAlign: 'center',
-    marginBottom: 10,
   },
   subtitle: {
-    fontSize: 16,
-    color: '#636e72',
+    fontSize: 15,
+    color: '#888',
+    marginBottom: 12,
     textAlign: 'center',
-    lineHeight: 22,
-    marginBottom: 10,
-  },
-  counterContainer: {
-    backgroundColor: '#f8f9fa',
-    borderRadius: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    alignSelf: 'center',
-    marginTop: 8,
   },
   counterText: {
     fontSize: 14,
-    color: '#636e72',
-    fontWeight: '600',
-  },
-  categorySection: {
-    marginBottom: 12,
-  },
-  categoryHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  categoryIndicator: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    marginRight: 8,
-  },
-  categoryTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#2d3436',
-  },
-  activitesGrid: {
-    gap: 10,
-  },
-  activiteCard: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    borderWidth: 2,
-    elevation: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-  },
-  activiteCardSelected: {
-    backgroundColor: '#f8fffd',
-    elevation: 3,
-    borderWidth: 2,
-    borderColor: colors.brandLime,
-  },
-  activiteContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 16,
-  },
-  iconContainer: {
-    width: 45,
-    height: 45,
-    borderRadius: 22.5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 15,
-  },
-  activiteIcon: {
-    fontSize: 22,
-  },
-  activiteText: {
-    flex: 1,
-    fontSize: 16,
-    fontWeight: '500',
-    color: '#2d3436',
-  },
-  activiteTextSelected: {
     color: colors.brandLime,
     fontWeight: '600',
+    marginBottom: 8,
   },
-  checkContainer: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    justifyContent: 'center',
+  optionsContainer: {
+    gap: 16,
+    marginBottom: 32,
+  },
+  optionButton: {
+    backgroundColor: '#F6F6F6',
+    borderRadius: 24,
+    paddingVertical: 18,
     alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#F6F6F6',
   },
-  checkIcon: {
-    color: '#fff',
+  optionButtonSelected: {
+    backgroundColor: colors.brandLime,
+    borderColor: colors.brandLime,
+  },
+  optionButtonText: {
     fontSize: 16,
+    color: '#222',
+    fontWeight: '500',
+  },
+  optionButtonTextSelected: {
+    color: '#fff',
     fontWeight: 'bold',
   },
   autreSection: {
-    backgroundColor: '#f8f9fa',
-    borderRadius: 12,
-    padding: 16,
     marginBottom: 20,
+    marginTop: 10,
   },
   autreLabel: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#2d3436',
+    color: '#222',
     marginBottom: 10,
   },
   autreInput: {
@@ -415,37 +328,44 @@ const styles = StyleSheet.create({
     minHeight: 60,
     textAlignVertical: 'top',
   },
-  recommendationsContainer: {
-    backgroundColor: '#e8f5e8',
-    borderRadius: 12,
-    padding: 16,
-    marginTop: 20,
-    borderLeftWidth: 4,
-    borderLeftColor: '#27ae60',
-  },
-  recommendationsTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#27ae60',
-    marginBottom: 10,
-  },
-  recommendationsText: {
-    fontSize: 14,
-    color: '#27ae60',
-    marginBottom: 5,
-    lineHeight: 18,
-  },
   footer: {
-    marginTop: 20,
-    paddingTop: 20,
-    borderTopWidth: 1,
-    borderTopColor: '#e9ecef',
+    marginTop: 24,
+    alignItems: 'center',
+    marginBottom: 80,
   },
   footerText: {
-    fontSize: 14,
-    color: '#636e72',
-    textAlign: 'center',
+    fontSize: 13,
+    color: '#888',
     fontStyle: 'italic',
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 24,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    paddingHorizontal: 24,
+  },
+  continueButton: {
+    backgroundColor: colors.brandLime,
+    borderRadius: 28,
+    paddingVertical: 18,
+    width: '100%',
+    alignItems: 'center',
+    shadowColor: '#C6FF00',
+    shadowOpacity: 0.12,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  continueButtonDisabled: {
+    backgroundColor: '#E0E0E0',
+  },
+  continueButtonText: {
+    color: '#222',
+    fontWeight: 'bold',
+    fontSize: 18,
+    letterSpacing: 0.5,
   },
 });
 

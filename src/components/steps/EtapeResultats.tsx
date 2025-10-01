@@ -46,7 +46,7 @@ const EtapeResultats: React.FC<EtapeResultatsProps> = ({
     };
 
     for (const [key, desc] of Object.entries(descriptions)) {
-      if (nutriType.startsWith(key)) {
+      if (nutriType && nutriType.startsWith(key)) {
         return desc;
       }
     }
@@ -56,144 +56,147 @@ const EtapeResultats: React.FC<EtapeResultatsProps> = ({
   const imcStatus = getIMCStatus();
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Ton profil est prêt</Text>
-        <Text style={styles.subtitle}>Voici le résumé de ton profilage personnalisé</Text>
-      </View>
-
-      {/* NutriType */}
-      <View style={styles.nutriTypeCard}>
-        <View style={styles.nutriTypeHeader}>
-          <Text style={styles.nutriTypeIcon}>🧬</Text>
-          <View style={styles.nutriTypeInfo}>
-            <Text style={styles.nutriTypeTitle}>Ton NutriType</Text>
-            <Text style={styles.nutriTypeCode}>{profile.nutriType}</Text>
-          </View>
+    <View style={styles.wrapper}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <Text style={styles.title}>Ton profil est prêt</Text>
+          <Text style={styles.subtitle}>Voici le résumé de ton profilage personnalisé</Text>
         </View>
-        <Text style={styles.nutriTypeDescription}>
-          {getNutriTypeDescription(profile.nutriType || '')}
-        </Text>
-        <View style={styles.nutriTypeStats}>
-          <Text style={styles.nutriTypeStatsText}>
-            Parmi {STATISTIQUES_PROFILS.PROFILS_PAR_NUTRITYPE.toLocaleString()} profils similaires
+
+        {/* NutriType */}
+        <View style={styles.nutriTypeCard}>
+          <View style={styles.nutriTypeHeader}>
+            <Text style={styles.nutriTypeIcon}>🧬</Text>
+            <View style={styles.nutriTypeInfo}>
+              <Text style={styles.nutriTypeTitle}>Ton NutriType</Text>
+              <Text style={styles.nutriTypeCode}>{profile.nutriType}</Text>
+            </View>
+          </View>
+          <Text style={styles.nutriTypeDescription}>
+            {getNutriTypeDescription(profile.nutriType || '')}
           </Text>
-        </View>
-      </View>
-
-      {/* Résumé du profil */}
-      <View style={styles.summarySection}>
-        <Text style={styles.sectionTitle}>Résumé de ton profil</Text>
-        
-        {/* Objectif */}
-        <View style={styles.summaryCard}>
-          <Text style={styles.summaryCardTitle}>Objectif principal</Text>
-          <Text style={styles.summaryCardValue}>
-            {LABELS.objectifs[profile.objectif]}
-          </Text>
-        </View>
-
-        {/* Données physiques */}
-        <View style={styles.summaryCard}>
-          <Text style={styles.summaryCardTitle}>Données physiques</Text>
-          <View style={styles.summaryRow}>
-            <Text style={styles.summaryLabel}>Sexe:</Text>
-            <Text style={styles.summaryValue}>
-              {profile.donneesPhysiques.sexe === 'masculin' ? 'Masculin' : 'Féminin'}
-            </Text>
-          </View>
-          <View style={styles.summaryRow}>
-            <Text style={styles.summaryLabel}>Âge:</Text>
-            <Text style={styles.summaryValue}>{profile.donneesPhysiques.age} ans</Text>
-          </View>
-          <View style={styles.summaryRow}>
-            <Text style={styles.summaryLabel}>Taille/Poids:</Text>
-            <Text style={styles.summaryValue}>
-              {profile.donneesPhysiques.taille}cm / {profile.donneesPhysiques.poids}kg
-            </Text>
-          </View>
-          <View style={styles.summaryRow}>
-            <Text style={styles.summaryLabel}>IMC:</Text>
-            <Text style={[styles.summaryValue, { color: imcStatus.color }]}>
-              {profile.donneesPhysiques.imc} - {imcStatus.text}
-            </Text>
-          </View>
-          <View style={styles.summaryRow}>
-            <Text style={styles.summaryLabel}>Activité:</Text>
-            <Text style={styles.summaryValue}>
-              {LABELS.niveauxActivite[profile.donneesPhysiques.niveauActivite]}
+          <View style={styles.nutriTypeStats}>
+            <Text style={styles.nutriTypeStatsText}>
+              Parmi {STATISTIQUES_PROFILS.PROFILS_PAR_NUTRITYPE.toLocaleString()} profils similaires
             </Text>
           </View>
         </View>
 
-        {/* Santé */}
-        <View style={styles.summaryCard}>
-          <Text style={styles.summaryCardTitle}>Situations de santé</Text>
-          <Text style={styles.summaryCardValue}>
-            {profile.donneesSante.nombreSituations === 0 
-              ? 'Aucune situation particulière'
-              : `${profile.donneesSante.nombreSituations} situation${profile.donneesSante.nombreSituations > 1 ? 's' : ''} à prendre en compte`
-            }
-          </Text>
-        </View>
+        {/* Résumé du profil */}
+        <View style={styles.summarySection}>
+          <Text style={styles.sectionTitle}>Résumé de ton profil</Text>
+          
+          {/* Objectif */}
+          <View style={styles.summaryCard}>
+            <Text style={styles.summaryCardTitle}>Objectif principal</Text>
+            <Text style={styles.summaryCardValue}>
+              {LABELS.objectifs[profile.objectif]}
+            </Text>
+          </View>
 
-        {/* Motivations */}
-        <View style={styles.summaryCard}>
-          <Text style={styles.summaryCardTitle}>Motivations</Text>
-          <Text style={styles.summaryCardValue}>
-            {profile.motivationsBlockages.motivations.length} motivation{profile.motivationsBlockages.motivations.length > 1 ? 's' : ''} identifiée{profile.motivationsBlockages.motivations.length > 1 ? 's' : ''}
-          </Text>
-        </View>
+          {/* Données physiques */}
+          <View style={styles.summaryCard}>
+            <Text style={styles.summaryCardTitle}>Données physiques</Text>
+            <View style={styles.summaryRow}>
+              <Text style={styles.summaryLabel}>Sexe:</Text>
+              <Text style={styles.summaryValue}>
+                {profile.donneesPhysiques.sexe === 'masculin' ? 'Masculin' : 'Féminin'}
+              </Text>
+            </View>
+            <View style={styles.summaryRow}>
+              <Text style={styles.summaryLabel}>Âge:</Text>
+              <Text style={styles.summaryValue}>{profile.donneesPhysiques.age} ans</Text>
+            </View>
+            <View style={styles.summaryRow}>
+              <Text style={styles.summaryLabel}>Taille/Poids:</Text>
+              <Text style={styles.summaryValue}>
+                {profile.donneesPhysiques.taille}cm / {profile.donneesPhysiques.poids}kg
+              </Text>
+            </View>
+            <View style={styles.summaryRow}>
+              <Text style={styles.summaryLabel}>IMC:</Text>
+              <Text style={[styles.summaryValue, { color: imcStatus.color }]}>
+                {profile.donneesPhysiques.imc} - {imcStatus.text}
+              </Text>
+            </View>
+            <View style={styles.summaryRow}>
+              <Text style={styles.summaryLabel}>Activité:</Text>
+              <Text style={styles.summaryValue}>
+                {LABELS.niveauxActivite[profile.donneesPhysiques.niveauActivite]}
+              </Text>
+            </View>
+          </View>
 
-        {/* Activités sportives */}
-        <View style={styles.summaryCard}>
-          <Text style={styles.summaryCardTitle}>Activités sportives</Text>
-          <Text style={styles.summaryCardValue}>
-            {profile.activitesSportives.activites.length} activité{profile.activitesSportives.activites.length > 1 ? 's' : ''} sélectionnée{profile.activitesSportives.activites.length > 1 ? 's' : ''}
-          </Text>
-        </View>
-      </View>
+          {/* Santé */}
+          <View style={styles.summaryCard}>
+            <Text style={styles.summaryCardTitle}>Situations de santé</Text>
+            <Text style={styles.summaryCardValue}>
+              {profile.donneesSante.nombreSituations === 0 
+                ? 'Aucune situation particulière'
+                : `${profile.donneesSante.nombreSituations} situation${profile.donneesSante.nombreSituations > 1 ? 's' : ''} à prendre en compte`
+              }
+            </Text>
+          </View>
 
-      {/* Prochaines étapes */}
-      <View style={styles.nextStepsSection}>
-        <Text style={styles.sectionTitle}>Prochaines étapes</Text>
-        <View style={styles.stepCard}>
-          <View style={styles.stepContent}>
-            <Text style={styles.stepTitle}>Recommandations personnalisées</Text>
-            <Text style={styles.stepDescription}>
-              Reçois des conseils nutrition et sport adaptés à ton profil
+          {/* Motivations */}
+          <View style={styles.summaryCard}>
+            <Text style={styles.summaryCardTitle}>Motivations</Text>
+            <Text style={styles.summaryCardValue}>
+              {profile.motivationsBlockages.motivations.length} motivation{profile.motivationsBlockages.motivations.length > 1 ? 's' : ''} identifiée{profile.motivationsBlockages.motivations.length > 1 ? 's' : ''}
+            </Text>
+          </View>
+
+          {/* Activités sportives */}
+          <View style={styles.summaryCard}>
+            <Text style={styles.summaryCardTitle}>Activités sportives</Text>
+            <Text style={styles.summaryCardValue}>
+              {profile.activitesSportives.activites.length} activité{profile.activitesSportives.activites.length > 1 ? 's' : ''} sélectionnée{profile.activitesSportives.activites.length > 1 ? 's' : ''}
             </Text>
           </View>
         </View>
-        
-        <View style={styles.stepCard}>
-          <View style={styles.stepContent}>
-            <Text style={styles.stepTitle}>Suivi quotidien</Text>
-            <Text style={styles.stepDescription}>
-              Accède à ton tableau de bord personnalisé
-            </Text>
+
+        {/* Prochaines étapes */}
+        <View style={styles.nextStepsSection}>
+          <Text style={styles.sectionTitle}>Prochaines étapes</Text>
+          <View style={styles.stepCard}>
+            <View style={styles.stepContent}>
+              <Text style={styles.stepTitle}>Recommandations personnalisées</Text>
+              <Text style={styles.stepDescription}>
+                Reçois des conseils nutrition et sport adaptés à ton profil
+              </Text>
+            </View>
+          </View>
+          
+          <View style={styles.stepCard}>
+            <View style={styles.stepContent}>
+              <Text style={styles.stepTitle}>Suivi quotidien</Text>
+              <Text style={styles.stepDescription}>
+                Accède à ton tableau de bord personnalisé
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.stepCard}>
+            <View style={styles.stepContent}>
+              <Text style={styles.stepTitle}>Accompagnement IA</Text>
+              <Text style={styles.stepDescription}>
+                Bénéficie d'un accompagnement intelligent
+              </Text>
+            </View>
           </View>
         </View>
 
-        <View style={styles.stepCard}>
-          <View style={styles.stepContent}>
-            <Text style={styles.stepTitle}>Accompagnement IA</Text>
-            <Text style={styles.stepDescription}>
-              Bénéficie d'un accompagnement intelligent
-            </Text>
-          </View>
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>Tes données sont sécurisées. Tu peux modifier ton profil à tout moment.</Text>
         </View>
-      </View>
-
-      {/* Boutons d'action */}
-      <View style={styles.actionsSection}>
+      </ScrollView>
+      <View style={styles.buttonContainer}>
         <TouchableOpacity 
           style={styles.primaryButton}
           onPress={onComplete}
         >
           <Text style={styles.primaryButtonText}>Commencer mon parcours</Text>
         </TouchableOpacity>
-
         <TouchableOpacity 
           style={styles.secondaryButton}
           onPress={onBack}
@@ -201,25 +204,23 @@ const EtapeResultats: React.FC<EtapeResultatsProps> = ({
           <Text style={styles.secondaryButtonText}>Modifier mon profil</Text>
         </TouchableOpacity>
       </View>
-
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>Tes données sont sécurisées. Tu peux modifier ton profil à tout moment.</Text>
-      </View>
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   container: {
     flex: 1,
+    paddingHorizontal: 24,
+    paddingTop: 40,
   },
   header: {
     alignItems: 'center',
     marginBottom: 30,
-  },
-  celebration: {
-    fontSize: 60,
-    marginBottom: 15,
   },
   title: {
     fontSize: 28,
@@ -235,7 +236,6 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   nutriTypeCard: {
-    backgroundColor: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
     backgroundColor: '#667eea',
     borderRadius: 16,
     padding: 20,
@@ -254,6 +254,7 @@ const styles = StyleSheet.create({
   nutriTypeIcon: {
     fontSize: 40,
     marginRight: 15,
+    color: '#fff',
   },
   nutriTypeInfo: {
     flex: 1,
@@ -350,10 +351,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 2,
   },
-  stepIcon: {
-    fontSize: 30,
-    marginRight: 15,
-  },
   stepContent: {
     flex: 1,
   },
@@ -368,30 +365,39 @@ const styles = StyleSheet.create({
     color: '#636e72',
     lineHeight: 18,
   },
-  actionsSection: {
-    marginBottom: 30,
+  buttonContainer: {
+    position: 'relative', // <-- change from 'absolute' to 'relative'
+    bottom: 0,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    paddingHorizontal: 24,
+    paddingBottom: 24,
+    backgroundColor: '#fff',
   },
   primaryButton: {
     backgroundColor: colors.brandLime,
-    borderRadius: 12,
-    padding: 16,
+    borderRadius: 28,
+    paddingVertical: 18,
+    width: '100%',
     alignItems: 'center',
     marginBottom: 12,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
+    shadowColor: '#C6FF00',
+    shadowOpacity: 0.12,
+    shadowRadius: 8,
+    elevation: 2,
   },
   primaryButtonText: {
-    fontSize: 18,
+    color: '#222',
     fontWeight: 'bold',
-    color: colors.textOnLime,
+    fontSize: 18,
+    letterSpacing: 0.5,
   },
   secondaryButton: {
-    backgroundColor: 'transparent',
-    borderRadius: 12,
-    padding: 16,
+    backgroundColor: '#fff',
+    borderRadius: 28,
+    paddingVertical: 16,
+    width: '100%',
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#ddd',
@@ -405,6 +411,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     borderTopWidth: 1,
     borderTopColor: '#e9ecef',
+    marginBottom: 80,
   },
   footerText: {
     fontSize: 14,

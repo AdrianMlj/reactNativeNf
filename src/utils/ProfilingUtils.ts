@@ -178,6 +178,7 @@ export const LABELS = {
   situationsSante: {
     [SituationSante.DIABETE]: 'Diabète',
     [SituationSante.HYPERTENSION]: 'Hypertension',
+    [SituationSante.HYPOTENSION]: 'Hypotension',
     [SituationSante.CHOLESTEROL]: 'Cholestérol élevé',
     [SituationSante.TROUBLES_DIGESTIFS]: 'Troubles digestifs',
     [SituationSante.STRESS_ANXIETE]: 'Stress / Anxiété',

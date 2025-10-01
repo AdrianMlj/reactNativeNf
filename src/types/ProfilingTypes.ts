@@ -72,6 +72,7 @@ export interface DonneesSante {
 export enum SituationSante {
   DIABETE = 'diabete',
   HYPERTENSION = 'hypertension',
+   HYPOTENSION = "hypotension",
   CHOLESTEROL = 'cholesterol',
   TROUBLES_DIGESTIFS = 'troubles_digestifs',
   STRESS_ANXIETE = 'stress_anxiete',
@@ -79,7 +80,7 @@ export enum SituationSante {
   TROUBLES_SOMMEIL = 'troubles_sommeil',
   DEPRESSION_LEGERE = 'depression_legere',
   TROUBLES_MENSTRUELS = 'troubles_menstruels',
-  AUCUN = 'aucun'
+  AUCUN = 'aucun',
 }
 
 // Étape 4 : Habitudes alimentaires
