@@ -21,6 +21,7 @@ import { UserProfile } from './src/types/ProfilingTypes';
 import { colors } from './src/utils/theme';
 import MainNavigator from './src/navigation/MainNavigator';
 import { UserProvider } from './src/context/UserContext';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -64,9 +65,11 @@ function App() {
   };
 
   return (
-    <UserProvider>
-      <MainNavigator />
-    </UserProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <UserProvider>
+        <MainNavigator />
+      </UserProvider>
+    </GestureHandlerRootView>
   );
 }
 
